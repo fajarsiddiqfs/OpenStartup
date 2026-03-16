@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>10 Profitable Small Business Ideas — OpenStartup</title>
+  <meta name="description" content="10 small business ideas with high profit margins and recommended pricing tiers for aspiring entrepreneurs." />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23533AFD'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='18'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f4f5f7; --white: #ffffff;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --accent: #533AFD; --acc-lt: #f0eeff; --acc-bd: #c4b8fd;
+      --text: #061B31; --muted: #64748b; --dim: #94a3b8;
+      --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 460px; margin: 0 auto; padding: 0 16px 80px; }
+
+    header { padding: 36px 0 22px; text-align: center; }
+    .logo { margin-bottom: 8px; display: inline-flex; align-items: center; text-decoration: none; }
+    .logo-text { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 1.8rem; letter-spacing: -1px; color: var(--text); }
+    header p { color: var(--muted); font-size: 0.83rem; margin-top: 4px; }
+
+    .back-btn { display: inline-flex; align-items: center; gap: 6px; font-size: 0.78rem; font-weight: 600; color: var(--muted); text-decoration: none; padding: 7px 14px; background: var(--white); border: 1.5px solid var(--border); border-radius: 99px; margin-bottom: 20px; transition: all 0.15s; }
+    .back-btn:hover { color: var(--accent); border-color: var(--acc-bd); background: var(--acc-lt); }
+
+    /* HERO */
+    .hero { background: linear-gradient(135deg, #533AFD 0%, #7c3aed 100%); border-radius: var(--radius); padding: 30px 20px; text-align: center; margin-bottom: 14px; position: relative; overflow: hidden; }
+    .hero::before { content: ''; position: absolute; inset: 0; background-image: radial-gradient(circle at 20% 80%, rgba(255,255,255,0.07) 0%, transparent 50%), radial-gradient(circle at 80% 20%, rgba(255,255,255,0.07) 0%, transparent 50%); }
+    .hero-tag { font-size: 0.62rem; font-weight: 800; letter-spacing: 1.5px; text-transform: uppercase; color: rgba(255,255,255,0.6); margin-bottom: 8px; position: relative; z-index: 1; }
+    .hero h1 { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 1.55rem; color: #fff; letter-spacing: -0.5px; line-height: 1.2; margin-bottom: 8px; position: relative; z-index: 1; }
+    .hero p { font-size: 0.8rem; color: rgba(255,255,255,0.75); line-height: 1.6; position: relative; z-index: 1; }
+
+    /* FORMULA CARD */
+    .formula-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 14px; }
+    .formula-title { font-size: 0.65rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+    .formula-row { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; font-size: 0.83rem; color: var(--text); font-weight: 600; }
+    .formula-row:last-child { margin-bottom: 0; }
+    .f-box { background: var(--acc-lt); border: 1.5px solid var(--acc-bd); border-radius: 8px; padding: 4px 10px; font-size: 0.78rem; font-weight: 700; color: var(--accent); }
+    .f-example { font-size: 0.72rem; color: var(--muted); margin-top: 8px; padding-top: 8px; border-top: 1px solid var(--border); line-height: 1.6; }
+    .f-example strong { color: var(--text); }
+
+    /* IDEA CARDS */
+    .idea-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 18px 18px 16px; margin-bottom: 12px; }
+    .idea-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; }
+    .idea-num { width: 34px; height: 34px; border-radius: 10px; background: var(--accent); color: #fff; font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 0.9rem; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+    .idea-title { font-family: 'Work Sans', sans-serif; font-weight: 800; font-size: 0.98rem; color: var(--text); line-height: 1.3; margin-bottom: 3px; }
+    .margin-badge { display: inline-block; font-size: 0.62rem; font-weight: 700; color: #15803d; background: #f0fdf4; border: 1px solid #86efac; border-radius: 99px; padding: 2px 8px; }
+    .examples-row { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 12px; }
+    .example-chip { font-size: 0.68rem; font-weight: 500; color: var(--muted); background: var(--bg); border: 1px solid var(--border2); border-radius: 99px; padding: 3px 10px; }
+    .pricing-label { font-size: 0.62rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 7px; }
+    .pricing-tiers { display: flex; flex-direction: column; gap: 5px; }
+    .tier-row { display: flex; justify-content: space-between; align-items: center; background: var(--bg); border-radius: 8px; padding: 7px 12px; }
+    .tier-name { font-size: 0.72rem; font-weight: 600; color: var(--text); }
+    .tier-price { font-size: 0.75rem; font-weight: 700; color: var(--accent); }
+    .tip-box { background: var(--acc-lt); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 7px 12px; margin-top: 10px; font-size: 0.72rem; color: var(--text); line-height: 1.5; }
+
+    /* FINAL ADVICE */
+    .advice-card { background: var(--text); border-radius: var(--radius); padding: 20px 18px; margin-bottom: 14px; }
+    .advice-title { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 1rem; color: #fff; margin-bottom: 12px; }
+    .advice-item { display: flex; align-items: center; gap: 10px; padding: 8px 0; border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.82rem; color: rgba(255,255,255,0.85); }
+    .advice-item:last-child { border-bottom: none; }
+    .advice-num { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); color: #fff; font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+
+    /* CTA */
+    .cta-btn { display: flex; align-items: center; justify-content: center; gap: 8px; width: 100%; padding: 14px; background: var(--accent); color: #fff; border: none; border-radius: var(--radius); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 700; text-decoration: none; box-shadow: 0 4px 14px rgba(83,58,253,0.28); transition: background 0.15s; margin-bottom: 14px; }
+    .cta-btn:hover { background: #4032C8; }
+
+    /* TOOLS */
+    .tools-bar { background: var(--white); border: 1.5px solid var(--border); border-radius: 10px; padding: 8px 12px; text-align: center; margin-bottom: 10px; }
+    .ads-placeholder { background: var(--white); border: 1.5px dashed var(--border2); border-radius: var(--radius); overflow: hidden; margin-bottom: 6px; width: 100%; aspect-ratio: 16/5; display: flex; align-items: center; justify-content: center; }
+    .ads-placeholder-inner { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .ads-placeholder-bar { width: 60%; height: 8px; background: var(--border); border-radius: 99px; }
+    .ads-placeholder-bar.short { width: 35%; height: 6px; opacity: 0.5; }
+    .ads-placeholder-label { font-size: 0.58rem; font-weight: 600; color: var(--dim); text-transform: uppercase; letter-spacing: 1px; margin-top: 4px; }
+    .footer-nav { display: flex; flex-wrap: wrap; justify-content: center; gap: 6px 16px; margin-bottom: 16px; }
+    .footer-nav a { font-size: 0.72rem; font-weight: 500; color: var(--muted); text-decoration: none; transition: color 0.15s; }
+    .footer-nav a:hover { color: var(--accent); }
+    footer { padding: 10px 0 20px; text-align: center; }
+    footer p { font-size: 0.72rem; color: var(--dim); }
+    footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <a href="index.html" class="logo">
+      <span class="logo-text">OpenStartup</span>
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" style="margin-left:6px;"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91C3.13 9.33 2.25 10.57 2.25 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.9.81 3.91s2.52 1.26 3.91.8c.66 1.31 1.9 2.19 3.33 2.19s2.68-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91C21.37 14.67 22.25 13.43 22.25 12z" fill="#1D9BF0"/><path d="M9 12.5l2.5 2.5 5-5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </a>
+    <p>Instant profit &amp; pricing calculator for small businesses</p>
+  </header>
+
+  <a href="index.html" class="back-btn">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M19 12H5M5 12l7-7M5 12l7 7" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Back to Calculator
+  </a>
+
+  <div class="hero">
+    <div class="hero-tag">Small Business Guide</div>
+    <h1>10 Profitable Small Business Ideas</h1>
+    <p>High margin ideas with recommended pricing tiers for aspiring entrepreneurs.</p>
+  </div>
+
+  <!-- FORMULA -->
+  <div class="formula-card">
+    <div class="formula-title">Simple Profit Formula</div>
+    <div class="formula-row">
+      <span class="f-box">Profit</span>
+      <span>=</span>
+      <span class="f-box">Selling Price</span>
+      <span>−</span>
+      <span class="f-box">Cost</span>
+    </div>
+    <div class="formula-row" style="font-size:0.78rem;color:var(--muted);font-weight:500;">
+      Profit Margin = (Profit ÷ Selling Price) × 100
+    </div>
+    <div class="f-example">
+      <strong>Example:</strong> Cost $3 · Selling Price $9 · Profit $6 · <strong style="color:#16a34a;">Margin 66%</strong>
+    </div>
+  </div>
+
+  <!-- IDEA 1 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">1</div>
+      <div>
+        <div class="idea-title">Specialty Coffee or Beverage Stall</div>
+        <span class="margin-badge">60–80% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Iced coffee</span><span class="example-chip">Matcha drinks</span><span class="example-chip">Lemonade</span><span class="example-chip">Milk tea</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Basic drink</span><span class="tier-price">$3 – $4</span></div>
+      <div class="tier-row"><span class="tier-name">Specialty drink</span><span class="tier-price">$5 – $6</span></div>
+      <div class="tier-row"><span class="tier-name">Premium / signature</span><span class="tier-price">$7 – $9</span></div>
+    </div>
+    <div class="tip-box">Unique flavors and branding allow premium pricing.</div>
+  </div>
+
+  <!-- IDEA 2 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">2</div>
+      <div>
+        <div class="idea-title">Home-Based Food / Cloud Kitchen</div>
+        <span class="margin-badge">40–70% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Burgers</span><span class="example-chip">Rice bowls</span><span class="example-chip">Nasi lemak</span><span class="example-chip">Pasta</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Budget meal</span><span class="tier-price">$6 – $8</span></div>
+      <div class="tier-row"><span class="tier-name">Standard meal</span><span class="tier-price">$9 – $12</span></div>
+      <div class="tier-row"><span class="tier-name">Premium meal</span><span class="tier-price">$13 – $18</span></div>
+    </div>
+    <div class="tip-box">Create combo meals to increase order value.</div>
+  </div>
+
+  <!-- IDEA 3 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">3</div>
+      <div>
+        <div class="idea-title">Custom Cakes & Dessert Business</div>
+        <span class="margin-badge">60–75% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Custom cakes</span><span class="example-chip">Brownies</span><span class="example-chip">Cupcakes</span><span class="example-chip">Dessert boxes</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Simple cakes</span><span class="tier-price">$35 – $60</span></div>
+      <div class="tier-row"><span class="tier-name">Custom design cakes</span><span class="tier-price">$70 – $150</span></div>
+      <div class="tier-row"><span class="tier-name">Premium event cakes</span><span class="tier-price">$200 – $500</span></div>
+    </div>
+    <div class="tip-box">Charge more for design complexity.</div>
+  </div>
+
+  <!-- IDEA 4 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">4</div>
+      <div>
+        <div class="idea-title">Print-on-Demand Apparel</div>
+        <span class="margin-badge">30–60% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">T-shirts</span><span class="example-chip">Hoodies</span><span class="example-chip">Tote bags</span><span class="example-chip">Caps</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Basic apparel</span><span class="tier-price">$20 – $30</span></div>
+      <div class="tier-row"><span class="tier-name">Branded apparel</span><span class="tier-price">$35 – $55</span></div>
+      <div class="tier-row"><span class="tier-name">Limited edition / premium</span><span class="tier-price">$60 – $120</span></div>
+    </div>
+    <div class="tip-box">Scarcity and limited drops increase demand.</div>
+  </div>
+
+  <!-- IDEA 5 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">5</div>
+      <div>
+        <div class="idea-title">Web Design / Website Development</div>
+        <span class="margin-badge">70–90% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Business websites</span><span class="example-chip">Landing pages</span><span class="example-chip">Startup websites</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Starter website</span><span class="tier-price">$500 – $1,000</span></div>
+      <div class="tier-row"><span class="tier-name">Business website</span><span class="tier-price">$1,500 – $3,500</span></div>
+      <div class="tier-row"><span class="tier-name">Premium website</span><span class="tier-price">$4,000 – $10,000+</span></div>
+    </div>
+    <div class="tip-box">Offer website packages instead of hourly pricing.</div>
+  </div>
+
+  <!-- IDEA 6 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">6</div>
+      <div>
+        <div class="idea-title">Graphic Design Services</div>
+        <span class="margin-badge">80–95% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Logo design</span><span class="example-chip">Brand identity</span><span class="example-chip">Social media graphics</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Basic logo</span><span class="tier-price">$100 – $300</span></div>
+      <div class="tier-row"><span class="tier-name">Branding package</span><span class="tier-price">$500 – $1,500</span></div>
+      <div class="tier-row"><span class="tier-name">Premium brand identity</span><span class="tier-price">$2,000 – $5,000+</span></div>
+    </div>
+    <div class="tip-box">Sell brand packages instead of single items.</div>
+  </div>
+
+  <!-- IDEA 7 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">7</div>
+      <div>
+        <div class="idea-title">Social Media Management</div>
+        <span class="margin-badge">60–85% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Instagram management</span><span class="example-chip">Content scheduling</span><span class="example-chip">Short-form video</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Starter package</span><span class="tier-price">$300 – $600 / mo</span></div>
+      <div class="tier-row"><span class="tier-name">Growth package</span><span class="tier-price">$700 – $1,500 / mo</span></div>
+      <div class="tier-row"><span class="tier-name">Premium management</span><span class="tier-price">$2,000 – $5,000+ / mo</span></div>
+    </div>
+    <div class="tip-box">Monthly retainers create stable income.</div>
+  </div>
+
+  <!-- IDEA 8 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">8</div>
+      <div>
+        <div class="idea-title">Skincare / Beauty Brand</div>
+        <span class="margin-badge">50–80% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Lip balm</span><span class="example-chip">Face serum</span><span class="example-chip">Handmade soap</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Basic products</span><span class="tier-price">$8 – $15</span></div>
+      <div class="tier-row"><span class="tier-name">Branded skincare</span><span class="tier-price">$18 – $35</span></div>
+      <div class="tier-row"><span class="tier-name">Premium skincare</span><span class="tier-price">$40 – $90</span></div>
+    </div>
+    <div class="tip-box">Branding and packaging drive perceived value.</div>
+  </div>
+
+  <!-- IDEA 9 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">9</div>
+      <div>
+        <div class="idea-title">Digital Products</div>
+        <span class="margin-badge">90–100% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Templates</span><span class="example-chip">Notion dashboards</span><span class="example-chip">Ebooks</span><span class="example-chip">Online courses</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">Simple templates</span><span class="tier-price">$9 – $29</span></div>
+      <div class="tier-row"><span class="tier-name">Toolkits / bundles</span><span class="tier-price">$30 – $99</span></div>
+      <div class="tier-row"><span class="tier-name">Courses / advanced resources</span><span class="tier-price">$100 – $500+</span></div>
+    </div>
+    <div class="tip-box">Bundles increase average order value.</div>
+  </div>
+
+  <!-- IDEA 10 -->
+  <div class="idea-card">
+    <div class="idea-header">
+      <div class="idea-num">10</div>
+      <div>
+        <div class="idea-title">Consulting / Coaching</div>
+        <span class="margin-badge">80–95% margin</span>
+      </div>
+    </div>
+    <div class="examples-row">
+      <span class="example-chip">Business consulting</span><span class="example-chip">Marketing coaching</span><span class="example-chip">Career coaching</span>
+    </div>
+    <div class="pricing-label">Recommended Pricing</div>
+    <div class="pricing-tiers">
+      <div class="tier-row"><span class="tier-name">1:1 session</span><span class="tier-price">$100 – $300</span></div>
+      <div class="tier-row"><span class="tier-name">Coaching package</span><span class="tier-price">$800 – $2,500</span></div>
+      <div class="tier-row"><span class="tier-name">Premium consulting</span><span class="tier-price">$3,000 – $10,000+</span></div>
+    </div>
+    <div class="tip-box">Sell structured programs instead of single calls.</div>
+  </div>
+
+  <!-- FINAL ADVICE -->
+  <div class="advice-card">
+    <div class="advice-title">When choosing a business, prioritise:</div>
+    <div class="advice-item"><div class="advice-num">1</div>High margin</div>
+    <div class="advice-item"><div class="advice-num">2</div>Low startup cost</div>
+    <div class="advice-item"><div class="advice-num">3</div>Repeat customers</div>
+    <div class="advice-item"><div class="advice-num">4</div>Scalability</div>
+  </div>
+
+  <a href="index.html" class="cta-btn">
+    <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M9 7l-6 5 6 5M3 12h18" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    Calculate Your Profit Now
+  </a>
+
+  <!-- ADS -->
+  <div class="ads-placeholder">
+    <div class="ads-placeholder-inner">
+      <div class="ads-placeholder-bar"></div>
+      <div class="ads-placeholder-bar short"></div>
+      <div class="ads-placeholder-bar" style="width:45%;"></div>
+      <div class="ads-placeholder-label">Ad space</div>
+    </div>
+  </div>
+  <p style="text-align:center;font-size:0.7rem;color:var(--dim);margin-top:6px;margin-bottom:14px;">Contact us for <a href="https://openstartup.xyz/contact" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">Sponsored Ads</a></p>
+
+  <!-- TOOLS BAR -->
+  <div class="tools-bar">
+    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/link" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/link" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/link" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/link" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/link" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
+  </div>
+
+  <!-- FOOTER NAV -->
+  <div class="footer-nav">
+    <a href="about.html">About</a>
+    <a href="smallbiz.html">Ideas</a>
+    <a href="https://openstartup.xyz/template" target="_blank">Template</a>
+    <a href="privacy.html">Privacy</a>
+    <a href="terms.html">Terms</a>
+  </div>
+
+  <footer>
+    <p>&copy; <span id="yr"></span> <a href="index.html">OpenStartup</a> &middot; Made by <a href="https://euphorya.co" target="_blank">Euphorya</a></p>
+  </footer>
+
+</div>
+<script>
+  var s = 2022, n = new Date().getFullYear();
+  document.getElementById('yr').textContent = n > s ? s + '–' + n : s;
+</script>
+</body>
+</html>
