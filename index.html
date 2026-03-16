@@ -93,6 +93,8 @@
     .cost-item-row { position: relative; background: var(--bg); border: 1.5px solid var(--border); border-radius: 11px; padding: 12px 44px 12px 12px; margin-bottom: 8px; animation: slideIn 0.18s ease both; }
     @keyframes slideIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
     .cost-item-num { font-size: 0.6rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .cost-hint { font-size: 0.65rem; color: var(--muted); background: #f8fafc; border: 1px solid var(--border); border-radius: 7px; padding: 6px 10px; margin: 6px 0 8px; line-height: 1.5; }
+    .cost-hint b { color: var(--accent); font-weight: 700; }
     .cost-name-field { margin-bottom: 8px; }
     .cost-name-field label { font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
     .cost-name-field input { padding-left: 11px !important; font-size: 0.88rem !important; background: var(--white) !important; }
@@ -113,8 +115,8 @@
     .cost-total-row { display: flex; justify-content: space-between; align-items: center; background: var(--acc-lt); border: 1px solid var(--acc-bd); border-radius: 8px; padding: 8px 12px; margin-top: 4px; margin-bottom: 10px; }
     .cost-total-label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
     .cost-total-value { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
-    .add-btn { width: 100%; padding: 10px; background: var(--white); border: 1.5px dashed var(--border2); border-radius: 9px; color: var(--muted); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.83rem; font-weight: 600; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
-    .add-btn:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--acc-lt); }
+    .add-btn { width: 100%; padding: 11px; background: var(--acc-lt); border: 1.5px dashed var(--accent); border-radius: 9px; color: var(--accent); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+    .add-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-style: solid; }
     .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
 
     /* EXTRA COSTS */
@@ -661,8 +663,21 @@
     <div class="card-title">Results</div>
     <span class="period-badge" id="periodBadge" style="display:none;"></span>
 
+    <!-- PRODUCTION SUMMARY -->
+    <div id="productionSummary" style="display:none;background:var(--acc-lt);border:1.5px solid var(--acc-bd);border-radius:11px;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:0.68rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🏭 Production Summary</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:0.82rem;color:var(--text);font-weight:600;">Max Products You Can Make</span>
+        <span style="font-size:1.3rem;font-weight:900;color:var(--accent);" id="resTotalBottles">—</span>
+      </div>
+      <div id="bottleneckWrap" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:0.78rem;color:#856404;">
+        ⚠️ <strong>Limiting ingredient:</strong> <span id="resBottleneck">—</span>
+      </div>
+      <div id="remainingStockList" style="margin-top:6px;"></div>
+    </div>
+
     <div class="result-row">
-      <div><div class="result-label">Cost Per Unit</div><div class="result-desc" id="descCpu"></div></div>
+      <div><div class="result-label">Cost Per Bottle</div><div class="result-desc" id="descCpu"></div></div>
       <div class="result-value" id="resCpu">—</div>
     </div>
     <div class="result-row">
@@ -787,19 +802,13 @@
   </div>
 
   <!-- BUSINESS TOOLS -->
-  <div class="biz-tools-section">
-    <div class="biz-tools-label">Tools</div>
-    <div class="biz-tools-row">
-      <a href="https://openstartup.xyz/aspire" target="_blank" class="biz-tool-link">Aspire</a>
-      <span class="biz-tools-sep">|</span>
-      <a href="https://openstartup.xyz/wise" target="_blank" class="biz-tool-link">Wise</a>
-      <span class="biz-tools-sep">|</span>
-      <a href="https://openstartup.xyz/testimonial" target="_blank" class="biz-tool-link">Testimonial</a>
-      <span class="biz-tools-sep">|</span>
-      <a href="https://openstartup.xyz/uptime" target="_blank" class="biz-tool-link">Uptime</a>
-      <span class="biz-tools-sep">|</span>
-      <a href="https://openstartup.xyz/seline" target="_blank" class="biz-tool-link">Seline</a>
-    </div>
+  <div style="text-align:center;margin-bottom:10px;padding:8px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;">
+    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
   </div>
 
   <!-- FOOTER NAV -->
@@ -894,13 +903,15 @@
         '<input type="text" class="no-prefix cost-name" placeholder="' + ph + '" />' +
       '</div>' +
       '<div class="cost-fields-row three-col">' +
-        '<div class="cost-field-group"><label>Total Qty</label><input type="number" class="cost-total-qty no-prefix" placeholder="e.g. 500" min="0" step="any" /></div>' +
-        '<div class="cost-field-group"><label>Used / Unit</label><input type="number" class="cost-used-qty no-prefix" placeholder="e.g. 50" min="0" step="any" /></div>' +
+        '<div class="cost-field-group"><label style="font-size:0.58rem;">Used per Product</label><input type="number" class="cost-used-qty no-prefix" placeholder="e.g. 60" min="0" step="any" /></div>' +
+        '<div class="cost-field-group"><label>Qty / Weight</label><input type="number" class="cost-total-qty no-prefix" placeholder="e.g. 500" min="0" step="any" /></div>' +
         '<div class="cost-field-group"><label>Unit</label><select class="cost-unit">' + opts + '</select></div>' +
       '</div>' +
+      '<div class="cost-hint">e.g. Sticker — Used per Product: 1 · Qty/Weight: 50 · Unit: pcs · Price: $9.58 → makes 50 products</div>' +
       '<div class="cost-fields-row two-col" style="margin-top:8px;">' +
-        '<div class="cost-field-group"><label>Total Cost Paid</label><div class="input-wrap"><span class="prefix">' + currencySymbol + '</span><input type="number" class="cost-value" placeholder="0.00" min="0" step="0.01" /></div></div>' +
-        '<div class="cost-field-group"><label>Cost / Unit ★</label><div class="cost-per-unit-display">—</div></div>' +
+        '<div class="cost-field-group"><label>Price Paid</label><div class="input-wrap"><span class="prefix">' + currencySymbol + '</span><input type="number" class="cost-value" placeholder="0.00" min="0" step="0.01" /></div></div>' +
+        '<div class="cost-field-group"><label>Cost / Product ★</label><div class="cost-per-unit-display">—</div></div>' +
+        '<div class="cost-max-bottles" style="font-size:0.62rem;color:var(--muted);margin-top:5px;text-align:right;"></div>' +
       '</div>';
     row.querySelectorAll('input').forEach(function(inp) { inp.addEventListener('input', calculate); });
     row.querySelectorAll('select').forEach(function(sel) { sel.addEventListener('change', calculate); });
@@ -932,7 +943,7 @@
     var btn = $('addCostBtn');
     var count = document.querySelectorAll('.cost-item-row').length;
     btn.disabled = count >= MAX_ROWS;
-    btn.textContent = count === 0 ? '+ Add cost item' : count >= MAX_ROWS ? 'Maximum 100 items reached' : '+ Add cost item (' + count + ' added · ' + (MAX_ROWS - count) + ' remaining)';
+    btn.textContent = count === 0 ? '+ Add cost item' : count >= MAX_ROWS ? 'Maximum 100 items reached' : '+ Add another item ↓ (' + count + ' added)';
   }
 
   function getCostPerUnit() {
@@ -943,10 +954,14 @@
       var usedPerUnit = parseFloat(row.querySelector('.cost-used-qty')  ? row.querySelector('.cost-used-qty').value  : 0) || 0;
       var display     = row.querySelector('.cost-per-unit-display');
       var costPerUnit = 0;
-      if (totalQty > 0 && usedPerUnit > 0 && totalCost > 0) {
-        costPerUnit = (usedPerUnit / totalQty) * totalCost;
+      if (totalCost > 0 && totalQty > 0 && usedPerUnit > 0) {
+        costPerUnit = (totalCost / totalQty) * usedPerUnit;
         if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
-      } else if (totalCost > 0 && totalQty === 0 && usedPerUnit === 0) {
+      } else if (totalCost > 0 && totalQty > 0 && usedPerUnit === 0) {
+        // no usage entered — show cost per 1 unit of qty
+        costPerUnit = totalCost / totalQty;
+        if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
+      } else if (totalCost > 0 && totalQty === 0) {
         costPerUnit = totalCost;
         if (display) display.textContent = currencySymbol + costPerUnit.toFixed(2);
       } else {
@@ -968,6 +983,45 @@
   function calculate() {
     updateCostTotal();
     var materialCpu = getCostPerUnit();
+
+    // ── Production calculation ──────────────────────────────────────────────
+    var rows = document.querySelectorAll('.cost-item-row');
+    var bottleCounts = [];
+    rows.forEach(function(row) {
+      var totalBought = parseFloat(row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value : 0) || 0;
+      var usedPerBottle = parseFloat(row.querySelector('.cost-used-qty') ? row.querySelector('.cost-used-qty').value : 0) || 0;
+      var maxBottlesEl = row.querySelector('.cost-max-bottles');
+      if (totalBought > 0 && usedPerBottle > 0) {
+        var maxB = Math.floor(totalBought / usedPerBottle);
+        bottleCounts.push({ name: row.querySelector('.cost-name') ? (row.querySelector('.cost-name').value || 'Item') : 'Item', max: maxB, totalBought: totalBought, usedPerBottle: usedPerBottle });
+        if (maxBottlesEl) maxBottlesEl.textContent = 'Max: ' + maxB + ' products';
+      } else {
+        if (maxBottlesEl) maxBottlesEl.textContent = '';
+      }
+    });
+
+    if (bottleCounts.length > 0) {
+      var totalBottlesPossible = Math.min.apply(null, bottleCounts.map(function(b) { return b.max; }));
+      var bottleneck = bottleCounts.reduce(function(a, b) { return a.max <= b.max ? a : b; });
+      $('resTotalBottles').textContent = totalBottlesPossible + ' products';
+      $('resBottleneck').textContent = bottleneck.name + ' (max ' + bottleneck.max + ' products)';
+      $('bottleneckWrap').style.display = bottleCounts.length > 1 ? 'block' : 'none';
+
+      // Remaining stock per ingredient
+      var stockHtml = '<div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Remaining Stock</div>';
+      bottleCounts.forEach(function(b) {
+        var remaining = b.totalBought - (b.usedPerBottle * totalBottlesPossible);
+        stockHtml += '<div style="display:flex;justify-content:space-between;font-size:0.78rem;padding:3px 0;border-bottom:1px solid rgba(83,58,253,0.1);">' +
+          '<span style="color:var(--text);">' + b.name + '</span>' +
+          '<span style="color:var(--muted);font-weight:600;">' + remaining.toFixed(1) + ' left</span>' +
+        '</div>';
+      });
+      $('remainingStockList').innerHTML = stockHtml;
+      $('productionSummary').style.display = 'block';
+    } else {
+      $('productionSummary').style.display = 'none';
+    }
+    // ── End production calculation ──────────────────────────────────────────
     var cPkg      = parseFloat($('pc_cPackaging').value) || 0;
     var cLabor    = parseFloat($('pc_cLabor').value)     || 0;
     var cOther    = parseFloat($('pc_cOtherVar').value)  || 0;
@@ -1168,7 +1222,7 @@
         tr += '<tr><td>' + nm + '</td><td>' + tq + ' ' + un + '</td><td>' + uq + ' ' + un + '</td><td>' + currencySymbol + parseFloat(co).toFixed(2) + '</td><td class="mono">' + cp + '</td></tr>';
       });
       if (tr) sec('(1) Material / Ingredient Costs',
-        '<table class="cap-table"><thead><tr><th>Item</th><th>Bought</th><th>Used/unit</th><th>Paid</th><th>Cost/unit</th></tr></thead><tbody>' + tr + '</tbody></table>' +
+        '<table class="cap-table"><thead><tr><th>Item</th><th>Qty/Weight</th><th>Used/Product</th><th>Price Paid</th><th>Cost/Product</th></tr></thead><tbody>' + tr + '</tbody></table>' +
         '<div style="display:flex;justify-content:flex-end;margin-top:5px;"><span style="font-size:0.66rem;font-weight:700;color:#533AFD;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:2px 9px;">Material cost/unit: ' + fmt(lastCalc.materialCpu || 0) + '</span></div>'
       );
     }
@@ -1259,7 +1313,7 @@
       var totalCost = row.querySelector('.cost-value')     ? row.querySelector('.cost-value').value      || '0' : '0';
       var cpuEl     = row.querySelector('.cost-per-unit-display');
       var cpu       = cpuEl ? cpuEl.textContent : '—';
-      rows.push(['Item ' + (i + 1), name, 'Total: ' + totalQty + ' ' + unit, 'Used/unit: ' + usedQty + ' ' + unit, 'Total Cost: ' + currencySymbol + totalCost, 'Cost/unit: ' + cpu]);
+      rows.push(['Item ' + (i + 1), name, 'Qty bought: ' + totalQty, 'Weight/size: ' + usedQty + ' ' + unit, 'Price paid: ' + currencySymbol + totalCost, 'Cost/product: ' + cpu]);
     });
     rows = rows.concat([
       [''], ['--- INPUTS ---'],
