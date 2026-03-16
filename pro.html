@@ -1,0 +1,1494 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <!-- Favicon -->
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23533AFD'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='18'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='8' fill='%23533AFD'/%3E%3Ctext x='16' y='23' text-anchor='middle' font-size='18'%3E🚀%3C/text%3E%3C/svg%3E" />
+  <title>OpenStartup — Instant profit &amp; pricing calculator for small businesses</title>
+  <meta name="description" content="OpenStartup is a free tool that helps small businesses calculate profit and set the right selling price." />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://openstartup.xyz" />
+  <meta property="og:title" content="OpenStartup — Instant profit &amp; pricing calculator" />
+  <meta property="og:description" content="Free profit and pricing calculator for small businesses." />
+  <link href="https://fonts.googleapis.com/css2?family=Work+Sans:wght@700;800;900&family=Plus+Jakarta+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #f4f5f7; --white: #ffffff;
+      --border: #e5e7eb; --border2: #d1d5db;
+      --accent: #533AFD; --acc-lt: #f0eeff; --acc-bd: #c4b8fd;
+      --red: #dc2626; --red-bg: #fef2f2; --red-bd: #fecaca;
+      --blue: #1d4ed8; --blue-bg: #eff6ff; --blue-bd: #bfdbfe;
+      --text: #061B31; --muted: #64748b; --dim: #94a3b8;
+      --radius: 14px;
+    }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 15px; min-height: 100vh; -webkit-font-smoothing: antialiased; }
+    .wrap { max-width: 460px; margin: 0 auto; padding: 0 16px 80px; }
+
+    /* HEADER */
+    header { padding: 40px 0 18px; text-align: center; }
+    .logo { margin-bottom: 10px; display: inline-flex; align-items: center; }
+    .logo-text { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 2rem; letter-spacing: -1px; color: var(--text); }
+    header p { color: var(--muted); font-size: 0.83rem; font-weight: 400; margin-top: 4px; }
+    .nav-pills { display: flex; gap: 8px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
+    .nav-pill-wrap { position: relative; }
+    .nav-pill { display: inline-flex; align-items: center; padding: 7px 14px; border-radius: 99px; background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
+    .nav-pill:hover { background: #4032C8; }
+    .pill-badge { position: absolute; top: -9px; right: -6px; font-size: 0.52rem; font-weight: 800; letter-spacing: 0.5px; padding: 2px 5px; border-radius: 99px; color: #fff; text-transform: uppercase; }
+    .badge-red { background: #ef4444; }
+    .badge-green { background: #16a34a; }
+
+    /* SOCIAL PROOF */
+    .social-proof { display: flex; align-items: center; gap: 12px; background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 12px 16px; margin-bottom: 12px; }
+    .social-avatars { display: flex; }
+    .avatar { width: 32px; height: 32px; border-radius: 50%; font-size: 0.75rem; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; border: 2px solid var(--white); margin-left: -8px; object-fit: cover; }
+    .social-avatars .avatar:first-child { margin-left: 0; }
+    .social-info { flex: 1; }
+    .social-stars { display: flex; align-items: center; gap: 2px; margin-bottom: 2px; }
+    .social-rating { font-size: 0.72rem; font-weight: 700; color: var(--text); margin-left: 4px; }
+    .social-text { font-size: 0.72rem; color: var(--muted); }
+    .social-text strong { color: var(--text); }
+
+    /* CARD */
+    .card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 18px; margin-bottom: 14px; }
+    .card-title { font-size: 0.72rem; font-weight: 700; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; margin-bottom: 16px; }
+    .divider { height: 1px; background: var(--border); margin: 16px 0; }
+    .section-label { font-size: 0.68rem; font-weight: 700; color: var(--accent); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; margin-top: 2px; }
+
+    /* LABELS & INPUTS */
+    label { display: block; font-size: 0.79rem; font-weight: 600; color: var(--text); margin-bottom: 5px; }
+    .field { margin-bottom: 14px; }
+    .field:last-child { margin-bottom: 0; }
+    .field-row { display: flex; gap: 8px; }
+    .field-row input { flex: 1; }
+    input[type="number"], input[type="text"] {
+      width: 100%; background: var(--white); border: 1.5px solid var(--border2); border-radius: 9px;
+      color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.93rem; font-weight: 500;
+      padding: 10px 11px 10px 28px; outline: none; transition: border-color 0.15s, box-shadow 0.15s;
+      -moz-appearance: textfield; appearance: textfield;
+    }
+    input[type="number"]::-webkit-inner-spin-button, input[type="number"]::-webkit-outer-spin-button { -webkit-appearance: none; }
+    input.no-prefix { padding-left: 11px; }
+    input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(83,58,253,0.12); }
+    .input-wrap { position: relative; display: flex; align-items: center; }
+    .prefix { position: absolute; left: 10px; color: var(--muted); font-size: 0.85rem; font-weight: 600; pointer-events: none; z-index: 1; }
+    select {
+      width: 100%; background: var(--white); border: 1.5px solid var(--border2); border-radius: 9px;
+      color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
+      padding: 10px 28px 10px 11px; outline: none; cursor: pointer;
+      -webkit-appearance: none; appearance: none;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+      background-repeat: no-repeat; background-position: right 10px center; transition: border-color 0.15s;
+    }
+    select:focus { border-color: var(--accent); outline: none; box-shadow: 0 0 0 3px rgba(83,58,253,0.12); }
+    #productName { font-size: 1rem; font-weight: 600; padding-left: 11px; }
+
+    /* COST ITEMS */
+    .cost-items-list { margin-bottom: 0; max-height: 500px; overflow-y: auto; overflow-x: hidden; }
+    .cost-items-list::-webkit-scrollbar { width: 4px; }
+    .cost-items-list::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+    .cost-item-row { position: relative; background: var(--bg); border: 1.5px solid var(--border); border-radius: 11px; padding: 12px 44px 12px 12px; margin-bottom: 8px; animation: slideIn 0.18s ease both; }
+    @keyframes slideIn { from { opacity: 0; transform: translateY(-5px); } to { opacity: 1; transform: translateY(0); } }
+    .cost-item-num { font-size: 0.6rem; font-weight: 700; color: var(--accent); letter-spacing: 1px; text-transform: uppercase; margin-bottom: 8px; }
+    .cost-hint { font-size: 0.65rem; color: var(--muted); background: #f8fafc; border: 1px solid var(--border); border-radius: 7px; padding: 6px 10px; margin: 6px 0 8px; line-height: 1.5; }
+    .cost-hint b { color: var(--accent); font-weight: 700; }
+    .cost-name-field { margin-bottom: 8px; }
+    .cost-name-field label { font-size: 0.65rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 4px; }
+    .cost-name-field input { padding-left: 11px !important; font-size: 0.88rem !important; background: var(--white) !important; }
+    .cost-fields-row { display: grid; gap: 8px; }
+    .cost-fields-row.three-col { grid-template-columns: 1fr 1fr 1fr; }
+    .cost-fields-row.two-col { grid-template-columns: 1fr 1fr; }
+    .cost-field-group { display: flex; flex-direction: column; min-width: 0; }
+    .cost-field-group label { font-size: 0.62rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; height: 16px; line-height: 16px; }
+    .cost-field-group .input-wrap, .cost-field-group .cost-per-unit-display, .cost-field-group select { height: 40px; box-sizing: border-box; width: 100%; }
+    .cost-field-group .input-wrap { position: relative; display: flex; align-items: center; }
+    .cost-field-group input { width: 100%; height: 40px !important; font-size: 0.88rem !important; padding: 0 10px 0 28px !important; background: var(--white) !important; box-sizing: border-box; line-height: 40px; }
+    .cost-field-group .no-prefix { padding: 0 10px !important; }
+    .cost-field-group .prefix { left: 8px; font-size: 0.82rem; top: 50%; transform: translateY(-50%); }
+    .cost-field-group select { font-size: 0.82rem; padding: 0 24px 0 9px; background-color: var(--white); }
+    .cost-per-unit-display { background: var(--acc-lt); border: 1.5px solid var(--acc-bd); border-radius: 9px; padding: 0 12px; font-size: 0.88rem; font-weight: 700; color: var(--accent); height: 40px; display: flex; align-items: center; width: 100%; box-sizing: border-box; }
+    .remove-btn { position: absolute; top: 10px; right: 10px; width: 28px; height: 28px; background: var(--white); border: 1.5px solid var(--border2); border-radius: 7px; color: var(--dim); font-size: 1rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.15s; }
+    .remove-btn:hover { background: var(--red-bg); border-color: var(--red-bd); color: var(--red); }
+    .cost-total-row { display: flex; justify-content: space-between; align-items: center; background: var(--acc-lt); border: 1px solid var(--acc-bd); border-radius: 8px; padding: 8px 12px; margin-top: 4px; margin-bottom: 10px; }
+    .cost-total-label { font-size: 0.8rem; font-weight: 600; color: var(--text); }
+    .cost-total-value { font-size: 0.9rem; font-weight: 700; color: var(--accent); }
+    .add-btn { width: 100%; padding: 11px; background: var(--acc-lt); border: 1.5px dashed var(--accent); border-radius: 9px; color: var(--accent); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.83rem; font-weight: 700; cursor: pointer; transition: all 0.15s; margin-top: 4px; }
+    .add-btn:hover:not(:disabled) { background: var(--accent); color: #fff; border-style: solid; }
+    .add-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* EXTRA COSTS */
+    .extra-cost-row { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .extra-cost-row:last-of-type { border-bottom: none; }
+    .extra-cost-info { flex: 1; min-width: 0; }
+    .extra-cost-name { font-size: 0.82rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .extra-cost-desc { font-size: 0.65rem; color: var(--muted); font-weight: 400; line-height: 1.3; }
+    .extra-cost-input { width: 110px; flex-shrink: 0; }
+    .extra-cost-input input { font-size: 0.9rem !important; font-weight: 600 !important; padding: 8px 10px 8px 32px !important; text-align: right; }
+
+    /* SMART PRICING SLIDER */
+    .pc-slider { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 99px; background: var(--border2); outline: none; cursor: pointer; }
+    .pc-slider::-webkit-slider-thumb { -webkit-appearance: none; width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; box-shadow: 0 1px 6px rgba(83,58,253,0.35); cursor: pointer; }
+    .pc-slider::-moz-range-thumb { width: 20px; height: 20px; border-radius: 50%; background: var(--accent); border: 3px solid #fff; cursor: pointer; }
+    .suggested-price-hint { font-size: 0.72rem; font-weight: 600; color: #16a34a; background: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 8px; padding: 6px 10px; margin-bottom: 8px; }
+
+    /* RESULTS CARD */
+    .results-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 18px; margin-bottom: 14px; display: none; }
+    .results-card.visible { display: block; }
+    .result-row { display: flex; justify-content: space-between; align-items: flex-start; padding: 10px 0; border-bottom: 1px solid var(--border); }
+    .result-row:last-child { border-bottom: none; }
+    .result-label { font-size: 0.82rem; color: var(--muted); font-weight: 500; }
+    .result-desc { font-size: 0.7rem; color: var(--dim); font-weight: 400; margin-top: 2px; }
+    .result-value { font-size: 1rem; font-weight: 700; color: var(--text); text-align: right; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .theme-green { color: #16a34a !important; }
+    .theme-red { color: var(--red) !important; }
+    .theme-blue { color: var(--blue) !important; }
+    .result-row.highlighted { background: var(--bg); border-radius: 9px; padding: 10px; margin: 0 -10px; }
+    .result-row.highlighted .result-value { font-size: 1.15rem; }
+    .period-badge { display: inline-block; font-size: 0.65rem; font-weight: 600; color: var(--accent); background: var(--acc-lt); border: 1px solid var(--acc-bd); border-radius: 20px; padding: 2px 9px; margin-bottom: 12px; }
+    .margin-bar-wrap { padding: 4px 0 0; }
+    .margin-bar-track { height: 7px; background: var(--bg); border-radius: 99px; overflow: hidden; margin: 6px 0 4px; border: 1px solid var(--border); }
+    .margin-bar-fill { height: 100%; border-radius: 99px; transition: width 0.5s ease, background 0.5s ease; background: var(--accent); }
+    .margin-bar-hint { font-size: 0.7rem; color: var(--muted); font-style: italic; }
+
+    /* CAPITAL TRACKER */
+    .capital-bar { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 18px 18px 16px; margin-bottom: 10px; }
+    .capital-label { font-size: 0.68rem; font-weight: 700; color: var(--muted); text-transform: uppercase; letter-spacing: 0.8px; margin-bottom: 8px; }
+    .capital-input-wrap { position: relative; display: flex; align-items: center; width: 100%; }
+    .capital-input-wrap input { width: 100%; background: var(--bg); border: 1.5px solid var(--border2); border-radius: 11px; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 1.9rem; font-weight: 800; padding: 12px 14px 12px 52px; outline: none; -moz-appearance: textfield; appearance: textfield; transition: border-color 0.15s, box-shadow 0.15s; letter-spacing: -0.5px; }
+    .capital-input-wrap input::placeholder { color: var(--dim); font-weight: 700; }
+    .capital-input-wrap input::-webkit-inner-spin-button, .capital-input-wrap input::-webkit-outer-spin-button { -webkit-appearance: none; }
+    .capital-input-wrap input:focus { border-color: var(--accent); box-shadow: 0 0 0 3px rgba(83,58,253,0.12); }
+    .capital-sym { font-size: 1.2rem; font-weight: 800; left: 16px; color: var(--text); }
+    .capital-right { display: flex; align-items: center; gap: 0; margin-top: 14px; background: var(--bg); border-radius: 10px; border: 1px solid var(--border); overflow: hidden; }
+    .capital-divider { width: 1px; height: 48px; background: var(--border); flex-shrink: 0; }
+    .capital-stat { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 3px; flex: 1; padding: 10px 6px; }
+    .capital-stat-label { font-size: 0.58rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.5px; }
+    .capital-stat-val { font-size: 0.9rem; font-weight: 800; color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; line-height: 1; }
+    .capital-stat-val.red { color: var(--red); }
+    .capital-stat-val.green { color: #16a34a; }
+    .capital-result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 12px; }
+    .cap-res-item { background: var(--bg); border: 1.5px solid var(--border); border-radius: 10px; padding: 11px 12px; }
+    .cap-res-item.red-bg { background: var(--red-bg); border-color: var(--red-bd); }
+    .cap-res-item.green-bg { background: #f0fdf4; border-color: #bbf7d0; }
+    .cap-res-label { font-size: 0.62rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 5px; }
+    .cap-res-val { font-size: 0.95rem; font-weight: 800; color: var(--text); line-height: 1.2; }
+    .cap-res-sub { font-size: 0.68rem; color: var(--muted); margin-top: 2px; font-weight: 500; }
+    .cap-progress-wrap { margin-top: 4px; }
+    .cap-progress-labels { display: flex; justify-content: space-between; font-size: 0.65rem; font-weight: 600; color: var(--muted); margin-bottom: 5px; }
+    .cap-progress-track { height: 8px; background: #dcfce7; border-radius: 99px; overflow: hidden; }
+    .cap-progress-fill { height: 100%; background: var(--red); border-radius: 99px; transition: width 0.5s ease; max-width: 100%; }
+
+    /* ACTION BUTTONS */
+    .action-btns { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 14px; }
+    .btn-full { grid-column: 1 / -1; }
+    .btn-wrap { display: flex; flex-direction: column; align-items: center; gap: 5px; }
+    .btn-wrap .action-btn { width: 100%; }
+    .btn-sub { font-size: 0.62rem; font-weight: 500; color: var(--muted); }
+    .action-btn { display: flex; align-items: center; justify-content: center; gap: 7px; padding: 13px 10px; border: none; border-radius: var(--radius); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.85rem; font-weight: 600; cursor: pointer; transition: filter 0.15s, box-shadow 0.15s; }
+    .btn-purple { background: var(--accent); box-shadow: 0 2px 10px rgba(83,58,253,0.25); }
+    .btn-purple:hover { filter: brightness(1.1); }
+    .btn-dark { background: #061B31; box-shadow: 0 2px 10px rgba(6,27,49,0.18); }
+    .btn-dark:hover { filter: brightness(1.2); }
+    .btn-teal { background: #25D366; box-shadow: 0 2px 10px rgba(37,211,102,0.25); }
+    .btn-teal:hover { filter: brightness(1.08); }
+
+    /* ADS */
+    .ads-placeholder { background: var(--white); border: 1.5px dashed var(--border2); border-radius: var(--radius); padding: 20px; text-align: center; color: var(--dim); font-size: 0.75rem; margin-bottom: 14px; }
+
+    /* TESTIMONIALS */
+    .testimonials-wrap { margin-bottom: 16px; }
+    .testimonials-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+    .testimonials-title { font-size: 0.72rem; font-weight: 700; color: var(--muted); letter-spacing: 1.2px; text-transform: uppercase; }
+    .testimonials-nav { display: flex; align-items: center; gap: 6px; }
+    .tnav-btn { width: 32px; height: 32px; background: var(--white); border: 1.5px solid var(--border2); border-radius: 9px; color: var(--text); display: flex; align-items: center; justify-content: center; cursor: pointer; transition: all 0.15s; flex-shrink: 0; }
+    .tnav-btn:hover { background: var(--accent); border-color: var(--accent); color: #fff; }
+    .tnav-btn:disabled { opacity: 0.3; cursor: not-allowed; }
+    .tnav-dots { display: flex; gap: 4px; align-items: center; }
+    .tnav-dot { width: 5px; height: 5px; border-radius: 99px; background: var(--border2); transition: all 0.25s; flex-shrink: 0; }
+    .tnav-dot.active { background: var(--accent); width: 16px; }
+    .testimonials-viewport { overflow: hidden; border-radius: var(--radius); touch-action: pan-y; }
+    .t-inner { display: flex; transition: transform 0.38s cubic-bezier(0.4,0,0.2,1); will-change: transform; }
+    .t-card { background: var(--white); border: 1.5px solid var(--border); border-radius: var(--radius); padding: 20px 18px; flex: 0 0 100%; width: 100%; box-sizing: border-box; display: flex; flex-direction: column; gap: 14px; }
+    .t-card-top { display: flex; align-items: center; gap: 12px; }
+    .t-avatar { width: 46px; height: 46px; border-radius: 50%; font-size: 1rem; font-weight: 800; color: #fff; display: flex; align-items: center; justify-content: center; flex-shrink: 0; object-fit: cover; overflow: hidden; }
+    .t-meta { flex: 1; min-width: 0; }
+    .t-name { font-size: 0.88rem; font-weight: 700; color: var(--text); margin-bottom: 2px; }
+    .t-title-country { font-size: 0.72rem; color: var(--muted); line-height: 1.4; }
+    .t-stars { display: flex; gap: 3px; }
+    .t-text { font-size: 0.85rem; color: var(--text); line-height: 1.65; font-style: italic; }
+    .t-text::before { content: '\201C'; color: var(--accent); font-size: 1.2rem; font-style: normal; line-height: 0; vertical-align: -4px; margin-right: 2px; }
+    .t-text::after { content: '\201D'; color: var(--accent); font-size: 1.2rem; font-style: normal; line-height: 0; vertical-align: -4px; margin-left: 2px; }
+    .t-counter { font-size: 0.65rem; color: var(--dim); text-align: right; font-weight: 500; }
+
+    /* FOOTER */
+    footer { padding: 10px 0 20px; }
+    footer p { font-size: 0.72rem; color: var(--dim); display: flex; justify-content: space-between; align-items: center; }
+    footer a { color: var(--accent); text-decoration: none; }
+
+    /* CAPTURE CARD (off-screen) */
+    #captureCard { position: fixed; left: -9999px; top: 0; width: 480px; background: #fff; padding: 26px 26px 18px; font-family: 'Plus Jakarta Sans', sans-serif; }
+    .cap-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 4px; }
+    .cap-logo { display: flex; align-items: center; gap: 5px; }
+    .cap-logo-text { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 1.1rem; color: #061B31; letter-spacing: -0.5px; }
+    .cap-product { font-weight: 800; font-size: 1.25rem; color: #061B31; }
+    .cap-badge { font-size: 0.6rem; font-weight: 600; color: #533AFD; background: #ede9fe; border: 1px solid #c4b5fd; border-radius: 20px; padding: 3px 9px; }
+    .cap-section { margin-bottom: 13px; }
+    .cap-section-title { font-size: 0.58rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; padding-bottom: 4px; border-bottom: 1px solid #f1f5f9; }
+    .cap-table { width: 100%; border-collapse: collapse; }
+    .cap-table th { font-size: 0.54rem; font-weight: 700; color: #94a3b8; text-transform: uppercase; padding: 3px 5px; text-align: left; }
+    .cap-table th:last-child, .cap-table td:last-child { text-align: right; }
+    .cap-table td { font-size: 0.7rem; color: #061B31; padding: 5px; border-bottom: 1px solid #f8f9fa; }
+    .cap-table td.mono { font-weight: 700; color: #533AFD; }
+    .cap-table tr:last-child td { border-bottom: none; }
+    .cap-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 7px; margin-bottom: 7px; }
+    .cap-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 7px; margin-bottom: 7px; }
+    .cap-item { background: #f8fafc; border-radius: 7px; padding: 7px 10px; border: 1px solid #f1f5f9; }
+    .cap-item.green-bg { background: #f0fdf4; border-color: #bbf7d0; }
+    .cap-item.red-bg { background: #fef2f2; border-color: #fecaca; }
+    .cap-item.blue-bg { background: #eff6ff; border-color: #bfdbfe; }
+    .cap-item.purple-bg { background: #ede9fe; border-color: #c4b5fd; }
+    .cap-lbl { font-size: 0.54rem; font-weight: 600; color: #94a3b8; text-transform: uppercase; letter-spacing: 0.4px; margin-bottom: 3px; }
+    .cap-val { font-size: 0.9rem; font-weight: 800; color: #061B31; }
+    .cap-val.green { color: #16a34a; } .cap-val.red { color: #dc2626; }
+    .cap-val.blue { color: #1d4ed8; } .cap-val.purple { color: #533AFD; }
+    .cap-sub { font-size: 0.55rem; color: #94a3b8; margin-top: 2px; }
+    .cap-margin-bar { background: #f1f5f9; border-radius: 99px; height: 5px; margin: 4px 0 2px; overflow: hidden; }
+    .cap-margin-fill { height: 100%; border-radius: 99px; }
+    .cap-footer { font-size: 0.58rem; color: #94a3b8; border-top: 1px solid #e5e7eb; padding-top: 9px; margin-top: 12px; display: flex; justify-content: space-between; }
+
+    /* CONFETTI */
+    .confetti-piece { position: fixed; width: 8px; height: 12px; opacity: 0; pointer-events: none; z-index: 9999; border-radius: 2px; }
+
+    @media (max-width: 360px) {
+      .cost-fields-row.three-col { grid-template-columns: 1fr 1fr; }
+      .cost-fields-row.three-col .cost-field-group:last-child { grid-column: 1 / -1; }
+    }
+
+    /* BUSINESS TOOLS */
+    .biz-tools-section {
+      background: var(--white);
+      border: 1.5px solid var(--border);
+      border-radius: var(--radius);
+      padding: 14px 18px;
+      margin-bottom: 10px;
+      text-align: center;
+    }
+    .biz-tools-label {
+      font-size: 0.62rem;
+      font-weight: 700;
+      color: var(--dim);
+      text-transform: uppercase;
+      letter-spacing: 1.2px;
+      margin-bottom: 10px;
+    }
+    .biz-tools-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 4px;
+    }
+    .biz-tool-link {
+      font-size: 0.82rem;
+      font-weight: 600;
+      color: var(--text);
+      text-decoration: none;
+      padding: 4px 2px;
+      transition: color 0.15s;
+    }
+    .biz-tool-link:hover { color: var(--accent); }
+    .biz-tools-sep {
+      color: var(--border2);
+      font-size: 0.75rem;
+      user-select: none;
+    }
+
+    /* FOOTER NAV */
+    .footer-nav {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 6px 14px;
+      margin-bottom: 16px;
+    }
+    .footer-nav a {
+      font-size: 0.72rem;
+      font-weight: 500;
+      color: var(--muted);
+      text-decoration: none;
+      transition: color 0.15s;
+    }
+    .footer-nav a:hover { color: var(--accent); }
+  </style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="logo">
+      <span class="logo-text">OpenStartup</span>
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" style="margin-left:6px;flex-shrink:0;">
+        <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91C3.13 9.33 2.25 10.57 2.25 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.9.81 3.91s2.52 1.26 3.91.8c.66 1.31 1.9 2.19 3.33 2.19s2.68-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91C21.37 14.67 22.25 13.43 22.25 12z" fill="#1D9BF0"/>
+        <path d="M9 12.5l2.5 2.5 5-5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+    </div>
+    <p>Instant profit &amp; pricing calculator for small businesses</p>
+    <div class="nav-pills">
+      <div class="nav-pill-wrap">
+        <a href="https://openstartup.xyz/smallbiz" target="_blank" class="nav-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="margin-right:5px;flex-shrink:0;"><path d="M12 2a7 7 0 0 1 5 11.9V17a1 1 0 0 1-1 1H8a1 1 0 0 1-1-1v-3.1A7 7 0 0 1 12 2z" stroke="white" stroke-width="1.8" stroke-linejoin="round" fill="none"/><path d="M9 21h6M10 18v3M14 18v3" stroke="white" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Small-Biz Ideas
+        </a>
+        <span class="pill-badge badge-red">NEW</span>
+      </div>
+      <div class="nav-pill-wrap">
+        <a href="https://openstartup.xyz/template" target="_blank" class="nav-pill">
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" style="margin-right:5px;flex-shrink:0;"><path d="M12 3v13M7 11l5 5 5-5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M5 21h14" stroke="white" stroke-width="2" stroke-linecap="round"/></svg>
+          Download Template
+        </a>
+        <span class="pill-badge badge-green">OFFER</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- SOCIAL PROOF -->
+  <div class="social-proof">
+    <div class="social-avatars">
+      <div class="avatar" style="background:linear-gradient(135deg,#f97316,#fb923c);">A</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#8b5cf6,#a78bfa);">B</div>
+      <div class="avatar" style="background:linear-gradient(135deg,#0ea5e9,#38bdf8);">C</div>
+    </div>
+    <div class="social-info">
+      <div class="social-stars">
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        <span class="social-rating">5.0</span>
+      </div>
+      <div class="social-text">Loved by <strong>100+ Small Businesses</strong></div>
+    </div>
+  </div>
+
+  <!-- BUSINESS TOOLS LINKS -->
+  <div style="text-align:center;margin-bottom:10px;padding:8px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;">
+    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
+  </div>
+
+  <!-- CAPITAL TRACKER -->
+  <div class="capital-bar" id="capitalBar">
+    <div class="capital-label">Starting Capital (optional)</div>
+    <div class="input-wrap capital-input-wrap">
+      <span class="prefix capital-sym prefix-currency">S$</span>
+      <input type="number" id="capitalInput" placeholder="0" min="0" step="1" oninput="calculate()" />
+    </div>
+    <div class="capital-right" id="capitalRight" style="display:none;">
+      <div class="capital-stat"><div class="capital-stat-label">Used</div><div class="capital-stat-val red" id="capitalUsed">—</div></div>
+      <div class="capital-divider"></div>
+      <div class="capital-stat"><div class="capital-stat-label">Remaining</div><div class="capital-stat-val" id="capitalRemaining">—</div></div>
+      <div class="capital-divider"></div>
+      <div class="capital-stat"><div class="capital-stat-label">Return</div><div class="capital-stat-val green" id="capitalReturn">—</div></div>
+    </div>
+  </div>
+
+  <!-- MAIN INPUT CARD -->
+  <div class="card">
+
+    <!-- CURRENCY + BUSINESS TYPE -->
+    <div class="card-title">Product / Service</div>
+    <div class="field-row" style="margin-bottom:14px;">
+      <div style="flex:1;">
+        <label>Currency</label>
+        <select id="currencySelect" onchange="updateCurrency()">
+          <optgroup label="— Southeast Asia —">
+          <option value="SGD" data-symbol="S$" selected>🇸🇬 SGD — Singapore (S$)</option>
+          <option value="MYR" data-symbol="RM">🇲🇾 MYR — Malaysia (RM)</option>
+          <option value="IDR" data-symbol="Rp">🇮🇩 IDR — Indonesia (Rp)</option>
+          <option value="THB" data-symbol="฿">🇹🇭 THB — Thailand (฿)</option>
+          <option value="PHP" data-symbol="₱">🇵🇭 PHP — Philippines (₱)</option>
+          <option value="VND" data-symbol="₫">🇻🇳 VND — Vietnam (₫)</option>
+          <option value="MMK" data-symbol="K">🇲🇲 MMK — Myanmar (K)</option>
+          <option value="KHR" data-symbol="៛">🇰🇭 KHR — Cambodia (៛)</option>
+          <option value="BND" data-symbol="B$">🇧🇳 BND — Brunei (B$)</option>
+          </optgroup>
+          <optgroup label="— South Asia —">
+          <option value="INR" data-symbol="₹">🇮🇳 INR — India (₹)</option>
+          <option value="BDT" data-symbol="৳">🇧🇩 BDT — Bangladesh (৳)</option>
+          <option value="PKR" data-symbol="₨">🇵🇰 PKR — Pakistan (₨)</option>
+          <option value="LKR" data-symbol="Rs">🇱🇰 LKR — Sri Lanka (Rs)</option>
+          <option value="NPR" data-symbol="Rs">🇳🇵 NPR — Nepal (Rs)</option>
+          </optgroup>
+          <optgroup label="— East Asia —">
+          <option value="JPY" data-symbol="¥">🇯🇵 JPY — Japan (¥)</option>
+          <option value="CNY" data-symbol="¥">🇨🇳 CNY — China (¥)</option>
+          <option value="KRW" data-symbol="₩">🇰🇷 KRW — South Korea (₩)</option>
+          <option value="HKD" data-symbol="HK$">🇭🇰 HKD — Hong Kong (HK$)</option>
+          <option value="TWD" data-symbol="NT$">🇹🇼 TWD — Taiwan (NT$)</option>
+          </optgroup>
+          <optgroup label="— Middle East —">
+          <option value="SAR" data-symbol="﷼">🇸🇦 SAR — Saudi Arabia (﷼)</option>
+          <option value="AED" data-symbol="د.إ">🇦🇪 AED — UAE (د.إ)</option>
+          <option value="QAR" data-symbol="ر.ق">🇶🇦 QAR — Qatar (ر.ق)</option>
+          <option value="KWD" data-symbol="د.ك">🇰🇼 KWD — Kuwait (د.ك)</option>
+          <option value="OMR" data-symbol="ر.ع">🇴🇲 OMR — Oman (ر.ع)</option>
+          <option value="BHD" data-symbol="ب.د">🇧🇭 BHD — Bahrain (ب.د)</option>
+          </optgroup>
+          <optgroup label="— Africa —">
+          <option value="NGN" data-symbol="₦">🇳🇬 NGN — Nigeria (₦)</option>
+          <option value="KES" data-symbol="KSh">🇰🇪 KES — Kenya (KSh)</option>
+          <option value="GHS" data-symbol="₵">🇬🇭 GHS — Ghana (₵)</option>
+          <option value="ZAR" data-symbol="R">🇿🇦 ZAR — South Africa (R)</option>
+          <option value="EGP" data-symbol="£">🇪🇬 EGP — Egypt (£)</option>
+          <option value="TZS" data-symbol="TSh">🇹🇿 TZS — Tanzania (TSh)</option>
+          </optgroup>
+          <optgroup label="— Americas —">
+          <option value="USD" data-symbol="$">🇺🇸 USD — US Dollar ($)</option>
+          <option value="CAD" data-symbol="C$">🇨🇦 CAD — Canada (C$)</option>
+          <option value="BRL" data-symbol="R$">🇧🇷 BRL — Brazil (R$)</option>
+          <option value="MXN" data-symbol="$">🇲🇽 MXN — Mexico ($)</option>
+          <option value="COP" data-symbol="$">🇨🇴 COP — Colombia ($)</option>
+          <option value="ARS" data-symbol="$">🇦🇷 ARS — Argentina ($)</option>
+          </optgroup>
+          <optgroup label="— Europe —">
+          <option value="EUR" data-symbol="€">🇪🇺 EUR — Euro (€)</option>
+          <option value="GBP" data-symbol="£">🇬🇧 GBP — UK Pound (£)</option>
+          <option value="CHF" data-symbol="Fr">🇨🇭 CHF — Switzerland (Fr)</option>
+          <option value="SEK" data-symbol="kr">🇸🇪 SEK — Sweden (kr)</option>
+          <option value="NOK" data-symbol="kr">🇳🇴 NOK — Norway (kr)</option>
+          <option value="DKK" data-symbol="kr">🇩🇰 DKK — Denmark (kr)</option>
+          <option value="PLN" data-symbol="zł">🇵🇱 PLN — Poland (zł)</option>
+          <option value="TRY" data-symbol="₺">🇹🇷 TRY — Turkey (₺)</option>
+          </optgroup>
+          <optgroup label="— Oceania —">
+          <option value="AUD" data-symbol="A$">🇦🇺 AUD — Australia (A$)</option>
+          <option value="NZD" data-symbol="NZ$">🇳🇿 NZD — New Zealand (NZ$)</option>
+          </optgroup>
+        </select>
+      </div>
+      <div style="flex:1;">
+        <label>Business Type <span style="font-size:0.65rem;font-weight:400;color:var(--muted);">(autofill)</span></label>
+        <select id="pc_businessType" onchange="pcApplyPreset()">
+          <option value="">— Select type —</option>
+          <optgroup label="— Food —">
+          <option value="food">Food &amp; Beverage</option>
+          <option value="bakery">Bakery &amp; Pastry</option>
+          <option value="catering">Catering &amp; Events</option>
+          <option value="snack">Snack &amp; Kuih</option>
+          <option value="drinks">Drinks &amp; Juice</option>
+          <option value="homecook">Home Cooking</option>
+          </optgroup>
+          <optgroup label="— Fashion —">
+          <option value="tshirt">T-Shirt &amp; Apparel</option>
+          <option value="hijab">Hijab &amp; Modest Wear</option>
+          <option value="accessories">Accessories &amp; Jewellery</option>
+          <option value="shoes">Shoes &amp; Footwear</option>
+          <option value="bags">Bags &amp; Handbags</option>
+          <option value="tailoring">Tailoring &amp; Sewing</option>
+          </optgroup>
+          <optgroup label="— Beauty &amp; Wellness —">
+          <option value="beauty">Beauty &amp; Cosmetics</option>
+          <option value="skincare">Skincare &amp; Soap</option>
+          <option value="haircare">Haircare Products</option>
+          <option value="spa">Spa &amp; Massage</option>
+          <option value="nails">Nail &amp; Lash Studio</option>
+          </optgroup>
+          <optgroup label="— Crafts &amp; Gifts —">
+          <option value="candles">Candles &amp; Aromatherapy</option>
+          <option value="craft">Handcraft &amp; DIY</option>
+          <option value="printing">Printing &amp; Merchandise</option>
+          <option value="flowers">Flowers &amp; Bouquets</option>
+          <option value="gifts">Gift &amp; Hamper</option>
+          <option value="stationery">Stationery &amp; Cards</option>
+          </optgroup>
+          <optgroup label="— Services —">
+          <option value="consulting">Consulting / Service</option>
+          <option value="freelance">Freelance &amp; Creative</option>
+          <option value="cleaning">Cleaning &amp; Laundry</option>
+          <option value="tutoring">Tutoring &amp; Education</option>
+          <option value="photography">Photography &amp; Video</option>
+          <option value="repair">Repair &amp; Maintenance</option>
+          <option value="delivery">Delivery &amp; Logistics</option>
+          </optgroup>
+          <optgroup label="— Digital —">
+          <option value="digital">Digital Products</option>
+          <option value="software">Software &amp; Apps</option>
+          <option value="content">Content &amp; Social Media</option>
+          <option value="ecommerce">E-Commerce &amp; Dropship</option>
+          </optgroup>
+          <optgroup label="— Other —">
+          <option value="plants">Plants &amp; Garden</option>
+          <option value="pets">Pet Products &amp; Grooming</option>
+          <option value="retail">Retail &amp; Wholesale</option>
+          <option value="other">Other Business</option>
+          </optgroup>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>Product / Service Name</label>
+      <input type="text" id="productName" class="no-prefix" placeholder="e.g. Popia Snack, Laksa, Burger, T-Shirt, Hijab" oninput="calculate()" />
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 1: MATERIAL COSTS -->
+    <div class="section-label">① Material / Ingredient Costs</div>
+    <div class="cost-items-list" id="costItemsList"></div>
+    <div class="cost-total-row" id="costTotalRow" style="display:none;">
+      <span class="cost-total-label">Total material cost / unit</span>
+      <span class="cost-total-value" id="costTotalValue">S$0.00</span>
+    </div>
+    <button type="button" class="add-btn" id="addCostBtn" onclick="addCostRow()">+ Add cost item</button>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 2: EXTRA COSTS -->
+    <div class="section-label">② Extra Costs <span style="font-weight:500;text-transform:none;letter-spacing:0;font-size:0.7rem;">(per unit produced)</span></div>
+
+    <div class="extra-cost-row">
+      <div class="extra-cost-info">
+        <div class="extra-cost-name" style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M21 8v13H3V8" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M23 3H1v5h22V3z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M10 12h4" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Packaging</div>
+        <div class="extra-cost-desc">Bags, boxes, bottles, labels, stickers per unit</div>
+      </div>
+      <div class="input-wrap extra-cost-input">
+        <span class="prefix prefix-currency">S$</span>
+        <input type="number" id="pc_cPackaging" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+      </div>
+    </div>
+    <div class="extra-cost-row">
+      <div class="extra-cost-info">
+        <div class="extra-cost-name" style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><circle cx="12" cy="8" r="4" stroke="var(--accent)" stroke-width="1.8"/><path d="M4 20c0-4 3.6-7 8-7s8 3 8 7" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Labour</div>
+        <div class="extra-cost-desc">Time to make 1 unit — wages, salary cost per unit</div>
+      </div>
+      <div class="input-wrap extra-cost-input">
+        <span class="prefix prefix-currency">S$</span>
+        <input type="number" id="pc_cLabor" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+      </div>
+    </div>
+    <div class="extra-cost-row">
+      <div class="extra-cost-info">
+        <div class="extra-cost-name" style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          Other Variable</div>
+        <div class="extra-cost-desc">Gas, electricity, delivery fees, platform fees per unit</div>
+      </div>
+      <div class="input-wrap extra-cost-input">
+        <span class="prefix prefix-currency">S$</span>
+        <input type="number" id="pc_cOtherVar" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+      </div>
+    </div>
+    <div class="extra-cost-row" style="border-bottom:none;margin-bottom:0;">
+      <div class="extra-cost-info">
+        <div class="extra-cost-name" style="display:flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" style="flex-shrink:0;"><path d="M3 9.5L12 3l9 6.5V20a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9.5z" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/><path d="M9 21V12h6v9" stroke="var(--accent)" stroke-width="1.8" stroke-linecap="round"/></svg>
+          Overhead</div>
+        <div class="extra-cost-desc">Rent, equipment, licences — divided per unit</div>
+      </div>
+      <div class="input-wrap extra-cost-input">
+        <span class="prefix prefix-currency">S$</span>
+        <input type="number" id="pc_cOverhead" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+      </div>
+    </div>
+
+    <div class="divider"></div>
+
+    <!-- SECTION 3: QUANTITY & SELLING PRICE -->
+    <div class="section-label">③ Production &amp; Pricing</div>
+
+    <div class="field">
+      <label>QUANTITY <span style="font-size:0.65rem;font-weight:400;color:var(--muted);text-transform:none;">(units produced / sold)</span></label>
+      <div class="field-row">
+        <div class="input-wrap" style="flex:1;">
+          <span class="prefix">#</span>
+          <input type="number" id="quantity" placeholder="e.g. 50" min="0" step="1" oninput="calculate()" />
+        </div>
+        <select id="quantityPeriod" style="width:130px;" onchange="calculate()">
+          <option value="">No period</option>
+          <option value="day">Per Day</option>
+          <option value="week">Per Week</option>
+          <option value="month">Per Month</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="field">
+      <label>SELLING PRICE</label>
+      <div class="field-row">
+        <div class="input-wrap" style="flex:1;">
+          <span class="prefix prefix-currency">S$</span>
+          <input type="number" id="sellingPrice" placeholder="0.00" min="0" step="0.01" oninput="calculate()" />
+        </div>
+        <select id="pricePeriod" style="width:130px;" onchange="calculate()">
+          <option value="">No period</option>
+          <option value="day">Per Day</option>
+          <option value="week">Per Week</option>
+          <option value="month">Per Month</option>
+        </select>
+      </div>
+    </div>
+
+    <div id="suggestedPriceHint" style="display:none;font-size:0.78rem;font-weight:600;color:var(--accent);background:var(--acc-lt);border:1px solid var(--acc-bd);border-radius:8px;padding:8px 12px;margin-top:8px;"></div>
+    <button type="button" id="useSuggestedBtn" onclick="applySuggestedPrice()" style="display:none;margin-top:6px;width:100%;padding:9px;background:var(--accent);color:#fff;border:none;border-radius:9px;font-family:'Plus Jakarta Sans',sans-serif;font-size:0.83rem;font-weight:600;cursor:pointer;">Use suggested ↓</button>
+
+    <div class="divider"></div>
+
+    <!-- TARGET PROFIT MARGIN SLIDER -->
+    <div class="field">
+      <label style="display:flex;justify-content:space-between;align-items:center;">
+        <span>TARGET PROFIT MARGIN</span>
+        <span id="pc_marginBadge" style="font-size:0.85rem;font-weight:800;color:var(--accent);background:var(--acc-lt);border:1px solid var(--acc-bd);border-radius:99px;padding:2px 10px;">30%</span>
+      </label>
+      <input type="range" id="pc_profitMargin" class="pc-slider" min="0" max="80" value="30" step="1" oninput="pcUpdateSlider(); calculate();" style="width:100%;margin-top:6px;" />
+      <div style="display:flex;justify-content:space-between;font-size:0.65rem;color:var(--dim);margin-top:3px;"><span>0%</span><span>Break even</span><span>80%</span></div>
+    </div>
+
+  </div><!-- /card -->
+
+  <!-- RESULTS CARD -->
+  <div class="results-card" id="resultsCard">
+    <div class="card-title">Results</div>
+    <span class="period-badge" id="periodBadge" style="display:none;"></span>
+
+    <!-- PRODUCTION SUMMARY -->
+    <div id="productionSummary" style="display:none;background:var(--acc-lt);border:1.5px solid var(--acc-bd);border-radius:11px;padding:14px 16px;margin-bottom:14px;">
+      <div style="font-size:0.68rem;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;">🏭 Production Summary</div>
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span style="font-size:0.82rem;color:var(--text);font-weight:600;">Max Products You Can Make</span>
+        <span style="font-size:1.3rem;font-weight:900;color:var(--accent);" id="resTotalBottles">—</span>
+      </div>
+      <div id="bottleneckWrap" style="display:none;background:#fff3cd;border:1px solid #ffc107;border-radius:8px;padding:8px 12px;margin-bottom:8px;font-size:0.78rem;color:#856404;">
+        ⚠️ <strong>Limiting ingredient:</strong> <span id="resBottleneck">—</span>
+      </div>
+      <div id="remainingStockList" style="margin-top:6px;"></div>
+    </div>
+
+    <div class="result-row">
+      <div><div class="result-label">Cost Per Bottle</div><div class="result-desc" id="descCpu"></div></div>
+      <div class="result-value" id="resCpu">—</div>
+    </div>
+    <div class="result-row">
+      <div><div class="result-label">Total Cost</div><div class="result-desc" id="descTotalCost"></div></div>
+      <div class="result-value" id="resTotalCost">—</div>
+    </div>
+    <div class="result-row">
+      <div><div class="result-label">Revenue</div><div class="result-desc" id="descRevenue"></div></div>
+      <div class="result-value theme-blue" id="resRevenue">—</div>
+    </div>
+    <div class="result-row highlighted">
+      <div><div class="result-label">Net Profit</div><div class="result-desc" id="descProfit"></div></div>
+      <div class="result-value" id="resProfit">—</div>
+    </div>
+    <div class="result-row">
+      <div><div class="result-label">Profit %</div><div class="result-desc" id="descProfitPct"></div></div>
+      <div class="result-value" id="resProfitPct">—</div>
+    </div>
+    <div class="result-row">
+      <div><div class="result-label">Net Profit Margin</div><div class="result-desc" id="descMargin"></div></div>
+      <div class="result-value" id="resMargin">—</div>
+    </div>
+
+    <div class="margin-bar-wrap" style="margin-top:10px;">
+      <div style="display:flex;justify-content:space-between;align-items:center;">
+        <span style="font-size:0.75rem;font-weight:600;color:var(--text);">Margin Health</span>
+        <span class="result-value" id="resMarginBar" style="font-size:0.85rem;">—</span>
+      </div>
+      <div class="margin-bar-track"><div class="margin-bar-fill" id="marginFill" style="width:0%;"></div></div>
+      <div class="margin-bar-hint" id="marginHint"></div>
+    </div>
+
+    <!-- SMART PRICING BREAKDOWN -->
+    <div id="smartPricingResults" style="display:none;">
+      <div class="divider" style="margin:14px 0;"></div>
+      <div style="font-size:0.68rem;font-weight:700;color:var(--accent);letter-spacing:1px;text-transform:uppercase;margin-bottom:12px;">Smart Pricing Breakdown</div>
+      <div class="result-row" style="background:var(--acc-lt);border-radius:10px;padding:10px 12px;">
+        <div><div class="result-label">Suggested Selling Price</div><div class="result-desc" id="descSuggested"></div></div>
+        <div class="result-value" id="resSuggested" style="color:var(--accent);font-size:1.1rem;">—</div>
+      </div>
+      <div class="result-row">
+        <div><div class="result-label">Material Cost / Unit</div><div class="result-desc">From cost items</div></div>
+        <div class="result-value" id="resMaterialCpu">—</div>
+      </div>
+      <div class="result-row">
+        <div><div class="result-label">Extra Costs / Unit</div><div class="result-desc" id="descExtraCosts">Packaging + Labour + Other + Overhead</div></div>
+        <div class="result-value" id="resExtraCosts">—</div>
+      </div>
+      <div class="result-row">
+        <div><div class="result-label">Total Cost / Unit</div><div class="result-desc">All costs combined</div></div>
+        <div class="result-value" id="resTotalCpu">—</div>
+      </div>
+      <div class="result-row">
+        <div><div class="result-label">Profit / Unit</div><div class="result-desc" id="descProfitUnit"></div></div>
+        <div class="result-value" id="resProfitUnit">—</div>
+      </div>
+    </div>
+
+    <!-- CAPITAL RESULTS -->
+    <div id="capitalResults" style="display:none;">
+      <div class="divider" style="margin:16px 0 14px;"></div>
+      <div class="card-title" style="margin-bottom:12px;">Capital Overview</div>
+      <div class="capital-result-grid">
+        <div class="cap-res-item"><div class="cap-res-label">Starting Capital</div><div class="cap-res-val" id="crCapital">—</div></div>
+        <div class="cap-res-item red-bg"><div class="cap-res-label">Capital Used</div><div class="cap-res-val theme-red" id="crUsed">—</div><div class="cap-res-sub" id="crUsedPct">—</div></div>
+        <div class="cap-res-item"><div class="cap-res-label">Capital Remaining</div><div class="cap-res-val" id="crRemaining">—</div><div class="cap-res-sub" id="crRemainingPct">—</div></div>
+        <div class="cap-res-item green-bg"><div class="cap-res-label">Return on Investment</div><div class="cap-res-val" id="crReturn">—</div><div class="cap-res-sub" id="crReturnPct">—</div></div>
+      </div>
+      <div class="cap-progress-wrap">
+        <div class="cap-progress-labels"><span id="cpUsedLabel">Used</span><span id="cpRemainingLabel">Remaining</span></div>
+        <div class="cap-progress-track"><div class="cap-progress-fill" id="capProgressFill" style="width:0%;"></div></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ACTION BUTTONS -->
+  <div class="action-btns" id="actionBtns">
+    <div class="btn-wrap">
+      <button type="button" class="action-btn btn-purple" id="screenshotBtn" onclick="takeScreenshot()">
+        <svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M6.5 2H3a1 1 0 0 0-1 1v3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 2H15a1 1 0 0 1 1 1v3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M6.5 16H3a1 1 0 0 1-1-1v-3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 16H15a1 1 0 0 0 1-1v-3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="white" stroke-width="1.6"/></svg>
+        Save Screenshot
+      </button>
+      <span class="btn-sub">file format in png</span>
+    </div>
+    <div class="btn-wrap">
+      <button type="button" class="action-btn btn-dark" id="csvBtn" onclick="exportCSV()">
+        <svg width="17" height="17" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="white" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg>
+        Export CSV
+      </button>
+      <span class="btn-sub">for Excel or Notion</span>
+    </div>
+    <div class="btn-wrap btn-full">
+      <button type="button" class="action-btn btn-teal" onclick="shareResults()">
+        <svg width="17" height="17" viewBox="0 0 24 24" fill="none"><path d="M22 2L11 13" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><path d="M22 2L15 22l-4-9-9-4 20-7z" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        Share Results
+      </button>
+      <span class="btn-sub">via WhatsApp or Telegram</span>
+    </div>
+  </div>
+
+  <!-- ADS -->
+  <div class="ads-placeholder">Advertisement space — replace with AdSense code</div>
+  <p style="text-align:center;font-size:0.7rem;color:var(--dim);margin-top:-8px;margin-bottom:14px;">Contact us for <a href="https://openstartup.xyz/contact" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">Sponsored Ads</a></p>
+
+  <!-- TESTIMONIALS -->
+  <div class="testimonials-wrap">
+    <div class="testimonials-header">
+      <span class="testimonials-title">What they say</span>
+      <div class="testimonials-nav">
+        <button type="button" class="tnav-btn" id="tnavPrev" onclick="scrollTestimonials(-1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+        <span class="tnav-dots" id="tnavDots"></span>
+        <button type="button" class="tnav-btn" id="tnavNext" onclick="scrollTestimonials(1)">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="testimonials-viewport" id="testimonialsViewport">
+      <div class="t-inner" id="tInner"></div>
+    </div>
+  </div>
+
+  <!-- BUSINESS TOOLS -->
+  <div style="text-align:center;margin-bottom:10px;padding:8px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;">
+    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
+    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
+  </div>
+
+  <!-- FOOTER NAV -->
+  <div class="footer-nav">
+    <a href="about.html">About</a>
+    <a href="https://openstartup.xyz/smallbiz" target="_blank">Ideas</a>
+    <a href="https://openstartup.xyz/template" target="_blank">Template</a>
+    <a href="privacy.html" target="_blank">Privacy</a>
+    <a href="terms.html" target="_blank">Terms</a>
+  </div>
+
+  <footer>
+    <p>
+      <span>&copy; <span id="copyrightYear">2022</span> <a href="https://openstartup.xyz" target="_blank">OpenStartup</a></span>
+      <span>Made by <a href="https://euphorya.co" target="_blank">Euphorya</a></span>
+    </p>
+  </footer>
+
+</div><!-- /wrap -->
+
+<!-- OFF-SCREEN CAPTURE CARD -->
+<div id="captureCard">
+  <div class="cap-header">
+    <div class="cap-logo">
+      <span class="cap-logo-text">OpenStartup</span>
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none"><path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91C3.13 9.33 2.25 10.57 2.25 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.9.81 3.91s2.52 1.26 3.91.8c.66 1.31 1.9 2.19 3.33 2.19s2.68-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91C21.37 14.67 22.25 13.43 22.25 12z" fill="#1D9BF0"/><path d="M9 12.5l2.5 2.5 5-5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+    <span id="capDate" style="font-size:0.6rem;color:#94a3b8;font-weight:500;"></span>
+  </div>
+  <div style="font-size:0.62rem;color:#94a3b8;margin-bottom:10px;">Instant profit &amp; pricing calculator for small businesses</div>
+  <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:14px;padding-bottom:12px;border-bottom:2px solid #f1f5f9;">
+    <div class="cap-product" id="capProduct"></div>
+    <span class="cap-badge" id="capBadge" style="display:none;"></span>
+  </div>
+  <div id="capBody"></div>
+  <div class="cap-footer">
+    <span>Generated by OpenStartup · openstartup.xyz</span>
+    <span>Made by Euphorya · euphorya.co</span>
+  </div>
+</div>
+
+<script>
+  // ── Init ──────────────────────────────────────────────────────────────────
+  (function() {
+    var start = 2022, now = new Date().getFullYear();
+    document.getElementById('copyrightYear').textContent = now > start ? start + '–' + now : String(start);
+  })();
+
+  var MAX_ROWS  = 100;
+  var rowCount  = 0;
+  var lastCalc  = null;
+  var wasProfit = false;
+  var currencySymbol = 'S$';
+
+  function $(id) { return document.getElementById(id); }
+
+  function updateCurrency() {
+    var sel = $('currencySelect');
+    var opt = sel.options[sel.selectedIndex];
+    currencySymbol = opt.getAttribute('data-symbol');
+    document.querySelectorAll('.prefix-currency').forEach(function(el) { el.textContent = currencySymbol; });
+    document.querySelectorAll('.capital-sym').forEach(function(el) { el.textContent = currencySymbol; });
+    // Update currency prefix inside dynamically-added cost rows
+    document.querySelectorAll('.cost-item-row .prefix').forEach(function(el) { el.textContent = currencySymbol; });
+    calculate();
+  }
+
+  function fmt(n) {
+    var abs = Math.abs(n).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return (n < 0 ? '-' : '') + currencySymbol + abs;
+  }
+  function fmtPct(n) { return (n >= 0 ? '+' : '') + n.toFixed(1) + '%'; }
+
+  // ── Cost Rows ─────────────────────────────────────────────────────────────
+  var namePHs  = ['e.g. Laksa Noodles', 'e.g. T-Shirt', 'e.g. Stickers', 'e.g. Consultation', 'e.g. Packaging', 'e.g. Labour', 'e.g. Shipping'];
+  var unitOpts = ['piece','gram','kg','litre','ml','per packet','per box','per bag','per roll','per set'];
+
+  function addCostRow() {
+    var existing = document.querySelectorAll('.cost-item-row').length;
+    if (existing >= MAX_ROWS) return;
+    rowCount++;
+    var list = $('costItemsList');
+    var row  = document.createElement('div');
+    row.className = 'cost-item-row';
+    var ph   = namePHs[(rowCount - 1) % namePHs.length];
+    var opts = unitOpts.map(function(u) { return '<option value="' + u + '">' + u + '</option>'; }).join('');
+    row.innerHTML =
+      '<div class="cost-item-num">Item ' + rowCount + '</div>' +
+      '<button type="button" class="remove-btn" onclick="removeCostRow(this)" title="Remove">×</button>' +
+      '<div class="cost-name-field">' +
+        '<label>Item Name</label>' +
+        '<input type="text" class="no-prefix cost-name" placeholder="' + ph + '" />' +
+      '</div>' +
+      '<div class="cost-fields-row three-col">' +
+        '<div class="cost-field-group"><label style="font-size:0.58rem;">Used per Product</label><input type="number" class="cost-used-qty no-prefix" placeholder="e.g. 60" min="0" step="any" /></div>' +
+        '<div class="cost-field-group"><label>Qty / Weight</label><input type="number" class="cost-total-qty no-prefix" placeholder="e.g. 500" min="0" step="any" /></div>' +
+        '<div class="cost-field-group"><label>Unit</label><select class="cost-unit">' + opts + '</select></div>' +
+      '</div>' +
+      '<div class="cost-hint">e.g. Sticker — Used per Product: 1 · Qty/Weight: 50 · Unit: pcs · Price: $9.58 → makes 50 products</div>' +
+      '<div class="cost-fields-row two-col" style="margin-top:8px;">' +
+        '<div class="cost-field-group"><label>Price Paid</label><div class="input-wrap"><span class="prefix">' + currencySymbol + '</span><input type="number" class="cost-value" placeholder="0.00" min="0" step="0.01" /></div></div>' +
+        '<div class="cost-field-group"><label>Cost / Product ★</label><div class="cost-per-unit-display">—</div></div>' +
+        '<div class="cost-max-bottles" style="font-size:0.62rem;color:var(--muted);margin-top:5px;text-align:right;"></div>' +
+      '</div>';
+    row.querySelectorAll('input').forEach(function(inp) { inp.addEventListener('input', calculate); });
+    row.querySelectorAll('select').forEach(function(sel) { sel.addEventListener('change', calculate); });
+    list.appendChild(row);
+    updateRemoveBtns();
+    updateAddBtn();
+    updateCostTotal();
+    calculate();
+  }
+
+  function removeCostRow(btn) {
+    var row = btn.closest('.cost-item-row');
+    row.style.transition = 'opacity 0.15s, transform 0.15s';
+    row.style.opacity = '0'; row.style.transform = 'translateY(-4px)';
+    setTimeout(function() { row.remove(); updateRemoveBtns(); updateAddBtn(); updateCostTotal(); calculate(); }, 150);
+  }
+
+  function updateRemoveBtns() {
+    var rows = document.querySelectorAll('.cost-item-row');
+    rows.forEach(function(row) {
+      var btn = row.querySelector('.remove-btn');
+      if (!btn) return;
+      btn.style.opacity = rows.length <= 1 ? '0' : '1';
+      btn.style.pointerEvents = rows.length <= 1 ? 'none' : 'auto';
+    });
+  }
+
+  function updateAddBtn() {
+    var btn = $('addCostBtn');
+    var count = document.querySelectorAll('.cost-item-row').length;
+    btn.disabled = count >= MAX_ROWS;
+    btn.textContent = count === 0 ? '+ Add cost item' : count >= MAX_ROWS ? 'Maximum 100 items reached' : '+ Add another item ↓ (' + count + ' added)';
+  }
+
+  function getCostPerUnit() {
+    var total = 0;
+    document.querySelectorAll('.cost-item-row').forEach(function(row) {
+      var totalCost   = parseFloat(row.querySelector('.cost-value')     ? row.querySelector('.cost-value').value     : 0) || 0;
+      var totalQty    = parseFloat(row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value : 0) || 0;
+      var usedPerUnit = parseFloat(row.querySelector('.cost-used-qty')  ? row.querySelector('.cost-used-qty').value  : 0) || 0;
+      var display     = row.querySelector('.cost-per-unit-display');
+      var costPerUnit = 0;
+      if (totalCost > 0 && totalQty > 0 && usedPerUnit > 0) {
+        costPerUnit = (totalCost / totalQty) * usedPerUnit;
+        if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
+      } else if (totalCost > 0 && totalQty > 0 && usedPerUnit === 0) {
+        // no usage entered — show cost per 1 unit of qty
+        costPerUnit = totalCost / totalQty;
+        if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
+      } else if (totalCost > 0 && totalQty === 0) {
+        costPerUnit = totalCost;
+        if (display) display.textContent = currencySymbol + costPerUnit.toFixed(2);
+      } else {
+        if (display) display.textContent = '—';
+      }
+      total += costPerUnit;
+    });
+    return total;
+  }
+
+  function updateCostTotal() {
+    var rows = document.querySelectorAll('.cost-item-row').length;
+    var totalRow = $('costTotalRow');
+    if (rows > 1) { totalRow.style.display = 'flex'; $('costTotalValue').textContent = fmt(getCostPerUnit()); }
+    else { totalRow.style.display = 'none'; }
+  }
+
+  // ── Calculate ─────────────────────────────────────────────────────────────
+  function calculate() {
+    updateCostTotal();
+    var materialCpu = getCostPerUnit();
+
+    // ── Production calculation ──────────────────────────────────────────────
+    var rows = document.querySelectorAll('.cost-item-row');
+    var bottleCounts = [];
+    rows.forEach(function(row) {
+      var totalBought = parseFloat(row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value : 0) || 0;
+      var usedPerBottle = parseFloat(row.querySelector('.cost-used-qty') ? row.querySelector('.cost-used-qty').value : 0) || 0;
+      var maxBottlesEl = row.querySelector('.cost-max-bottles');
+      if (totalBought > 0 && usedPerBottle > 0) {
+        var maxB = Math.floor(totalBought / usedPerBottle);
+        bottleCounts.push({ name: row.querySelector('.cost-name') ? (row.querySelector('.cost-name').value || 'Item') : 'Item', max: maxB, totalBought: totalBought, usedPerBottle: usedPerBottle });
+        if (maxBottlesEl) maxBottlesEl.textContent = 'Max: ' + maxB + ' products';
+      } else {
+        if (maxBottlesEl) maxBottlesEl.textContent = '';
+      }
+    });
+
+    if (bottleCounts.length > 0) {
+      var totalBottlesPossible = Math.min.apply(null, bottleCounts.map(function(b) { return b.max; }));
+      var bottleneck = bottleCounts.reduce(function(a, b) { return a.max <= b.max ? a : b; });
+      $('resTotalBottles').textContent = totalBottlesPossible + ' products';
+      $('resBottleneck').textContent = bottleneck.name + ' (max ' + bottleneck.max + ' products)';
+      $('bottleneckWrap').style.display = bottleCounts.length > 1 ? 'block' : 'none';
+
+      // Remaining stock per ingredient
+      var stockHtml = '<div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Remaining Stock</div>';
+      bottleCounts.forEach(function(b) {
+        var remaining = b.totalBought - (b.usedPerBottle * totalBottlesPossible);
+        stockHtml += '<div style="display:flex;justify-content:space-between;font-size:0.78rem;padding:3px 0;border-bottom:1px solid rgba(83,58,253,0.1);">' +
+          '<span style="color:var(--text);">' + b.name + '</span>' +
+          '<span style="color:var(--muted);font-weight:600;">' + remaining.toFixed(1) + ' left</span>' +
+        '</div>';
+      });
+      $('remainingStockList').innerHTML = stockHtml;
+      $('productionSummary').style.display = 'block';
+    } else {
+      $('productionSummary').style.display = 'none';
+    }
+    // ── End production calculation ──────────────────────────────────────────
+    var cPkg      = parseFloat($('pc_cPackaging').value) || 0;
+    var cLabor    = parseFloat($('pc_cLabor').value)     || 0;
+    var cOther    = parseFloat($('pc_cOtherVar').value)  || 0;
+    var cOverhead = parseFloat($('pc_cOverhead').value)  || 0;
+    var extraCpu  = cPkg + cLabor + cOther + cOverhead;
+    var cpu       = materialCpu + extraCpu;
+
+    var margin    = parseFloat($('pc_profitMargin').value) / 100 || 0;
+    var suggested = margin < 1 && cpu > 0 ? cpu / (1 - margin) : 0;
+
+    if (suggested > 0) {
+      $('suggestedPriceHint').style.display = 'block';
+      $('suggestedPriceHint').textContent   = '💡 Suggested price at ' + $('pc_profitMargin').value + '% margin: ' + fmt(suggested);
+      $('useSuggestedBtn').style.display    = 'inline-block';
+      $('useSuggestedBtn').setAttribute('data-price', suggested.toFixed(2));
+    } else {
+      $('suggestedPriceHint').style.display = 'none';
+      $('useSuggestedBtn').style.display    = 'none';
+    }
+
+    var qty   = parseFloat($('quantity').value);
+    var price = parseFloat($('sellingPrice').value);
+    var qPer  = $('quantityPeriod').value;
+    var pPer  = $('pricePeriod').value;
+
+    if (isNaN(qty) || qty <= 0) { $('resultsCard').classList.remove('visible'); return; }
+    var effectivePrice = (!isNaN(price) && price > 0) ? price : suggested;
+    if (effectivePrice <= 0) { $('resultsCard').classList.remove('visible'); return; }
+
+    var totalCost = cpu * qty;
+    var revenue   = effectivePrice * qty;
+    var profit    = revenue - totalCost;
+    var profitPct = totalCost > 0 ? (profit / totalCost) * 100 : 0;
+    var marginPct = revenue  > 0 ? (profit / revenue)   * 100 : 0;
+
+    var periodLabel = '';
+    if (qPer || pPer) { periodLabel = 'Calculated per ' + (qPer || pPer); }
+    var badge = $('periodBadge');
+    if (periodLabel) { badge.textContent = periodLabel; badge.style.display = 'inline-block'; }
+    else { badge.style.display = 'none'; }
+    var perStr = periodLabel ? ' ' + periodLabel.toLowerCase() : '';
+
+    $('resCpu').textContent        = fmt(cpu);
+    $('descCpu').textContent       = 'Material ' + fmt(materialCpu) + ' + Extra ' + fmt(extraCpu);
+    $('resTotalCost').textContent  = fmt(totalCost);
+    $('descTotalCost').textContent = qty + ' units × ' + fmt(cpu);
+    $('resRevenue').textContent    = fmt(revenue);
+    $('descRevenue').textContent   = qty + ' units × ' + fmt(effectivePrice) + (perStr ? perStr : '');
+
+    var profitEl = $('resProfit');
+    profitEl.textContent = fmt(profit);
+    profitEl.className   = 'result-value ' + (profit >= 0 ? 'theme-green' : 'theme-red');
+    $('descProfit').textContent = 'Revenue − Total Cost' + (perStr ? perStr : '');
+
+    var pctEl = $('resProfitPct');
+    pctEl.textContent = fmtPct(profitPct);
+    pctEl.className   = 'result-value ' + (profitPct >= 0 ? 'theme-green' : 'theme-red');
+    $('descProfitPct').textContent = 'Profit ÷ Cost × 100';
+
+    var marginEl = $('resMargin');
+    marginEl.textContent = fmtPct(marginPct);
+    marginEl.className   = 'result-value ' + (marginPct >= 0 ? 'theme-green' : 'theme-red');
+    $('descMargin').textContent = 'Profit ÷ Revenue × 100';
+
+    var barPct   = Math.min(Math.max(marginPct, 0), 100);
+    var barColor = marginPct < 0 ? '#dc2626' : marginPct < 10 ? '#f97316' : marginPct < 25 ? '#eab308' : '#16a34a';
+    $('marginFill').style.width      = barPct + '%';
+    $('marginFill').style.background = barColor;
+    $('resMarginBar').textContent    = fmtPct(marginPct);
+    $('resMarginBar').className      = 'result-value ' + (marginPct < 0 ? 'theme-red' : marginPct < 10 ? '' : 'theme-green');
+    $('marginHint').textContent      = marginPct < 0 ? "You're losing money on this" : marginPct < 10 ? 'Thin margin — review your costs' : marginPct < 25 ? 'Decent — room to improve' : marginPct < 40 ? 'Solid margin' : 'Excellent margin!';
+
+    if (cpu > 0) {
+      $('smartPricingResults').style.display = 'block';
+      var profitUnitS = suggested - cpu;
+      $('resSuggested').textContent    = fmt(suggested);
+      $('descSuggested').textContent   = $('pc_profitMargin').value + '% target margin · ' + fmt(profitUnitS) + ' profit/unit';
+      $('resMaterialCpu').textContent  = fmt(materialCpu);
+      $('resExtraCosts').textContent   = fmt(extraCpu);
+      $('descExtraCosts').textContent  = [cPkg?'Pkg '+fmt(cPkg):'', cLabor?'Labour '+fmt(cLabor):'', cOther?'Other '+fmt(cOther):'', cOverhead?'OH '+fmt(cOverhead):''].filter(Boolean).join(' · ') || 'None entered';
+      $('resTotalCpu').textContent     = fmt(cpu);
+      var profUnitActual = effectivePrice - cpu;
+      $('resProfitUnit').textContent   = fmt(profUnitActual);
+      $('resProfitUnit').className     = 'result-value ' + (profUnitActual >= 0 ? 'theme-green' : 'theme-red');
+      $('descProfitUnit').textContent  = 'At your selling price of ' + fmt(effectivePrice);
+    } else {
+      $('smartPricingResults').style.display = 'none';
+    }
+
+    $('resultsCard').classList.add('visible');
+
+    var capital = parseFloat($('capitalInput').value);
+    if (!isNaN(capital) && capital > 0) {
+      var capUsed      = totalCost;
+      var capRemaining = capital - capUsed;
+      var capReturn    = capital + profit;
+      var usedPct      = Math.min((capUsed / capital) * 100, 100);
+      var roiPct       = (profit / capital) * 100;
+      $('capitalRight').style.display   = 'flex';
+      $('capitalUsed').textContent      = fmt(capUsed);
+      $('capitalRemaining').textContent = fmt(Math.max(capRemaining, 0));
+      $('capitalReturn').textContent    = fmt(capReturn);
+      $('capitalResults').style.display = 'block';
+      $('crCapital').textContent    = fmt(capital);
+      $('crUsed').textContent       = fmt(capUsed);
+      $('crUsedPct').textContent    = usedPct.toFixed(1) + '% of capital';
+      $('crRemaining').textContent  = fmt(Math.max(capRemaining, 0));
+      $('crRemainingPct').textContent = capRemaining < 0 ? 'Over budget by ' + fmt(Math.abs(capRemaining)) : (100 - usedPct).toFixed(1) + '% left';
+      $('crReturn').textContent     = fmt(capReturn);
+      $('crReturnPct').textContent  = (roiPct >= 0 ? '+' : '') + roiPct.toFixed(1) + '% ROI';
+      $('crReturn').className       = 'cap-res-val ' + (capReturn >= capital ? 'theme-green' : 'theme-red');
+      $('capProgressFill').style.width = usedPct + '%';
+      $('cpUsedLabel').textContent      = 'Used ' + usedPct.toFixed(0) + '%';
+      $('cpRemainingLabel').textContent = 'Remaining ' + Math.max(0, 100 - usedPct).toFixed(0) + '%';
+    } else {
+      $('capitalRight').style.display   = 'none';
+      $('capitalResults').style.display = 'none';
+    }
+
+    var isProfit = profit > 0;
+    if (isProfit && !wasProfit) confetti();
+    wasProfit = isProfit;
+
+    lastCalc = {
+      product: $('productName').value || 'Unnamed',
+      period: periodLabel,
+      cpu: cpu, materialCpu: materialCpu, extraCpu: extraCpu,
+      suggested: suggested,
+      qty: qty, price: effectivePrice,
+      totalCost: totalCost, revenue: revenue,
+      profit: profit, profitPct: profitPct, margin: marginPct
+    };
+  }
+
+  function applySuggestedPrice() {
+    var p = $('useSuggestedBtn').getAttribute('data-price');
+    if (p) { $('sellingPrice').value = parseFloat(p).toFixed(2); calculate(); }
+  }
+
+  // ── Confetti ──────────────────────────────────────────────────────────────
+  function confetti() {
+    var colors = ['#533AFD','#22c55e','#86efac','#061B31','#fbbf24','#60a5fa','#f472b6','#a78bfa'];
+    for (var i = 0; i < 120; i++) {
+      (function(i) {
+        setTimeout(function() {
+          var el = document.createElement('div');
+          el.className = 'confetti-piece';
+          el.style.left = Math.random() * 100 + 'vw';
+          el.style.top  = '-12px';
+          el.style.background = colors[Math.floor(Math.random() * colors.length)];
+          el.style.transform  = 'rotate(' + Math.random() * 360 + 'deg)';
+          document.body.appendChild(el);
+          var dur = 2800 + Math.random() * 800;
+          el.animate([
+            { opacity:1, transform:'translateY(0) rotate(0deg)',       top:'-12px' },
+            { opacity:1, transform:'translateY(60vh) rotate(360deg)',  top:'0' },
+            { opacity:0, transform:'translateY(100vh) rotate(720deg)', top:'0' }
+          ], { duration: dur, easing: 'ease-in', fill: 'forwards' });
+          setTimeout(function() { el.remove(); }, dur + 100);
+        }, i * 18);
+      })(i);
+    }
+  }
+
+  // ── Screenshot ────────────────────────────────────────────────────────────
+  function takeScreenshot() {
+    if (!lastCalc) { alert('Calculate first!'); return; }
+    var btn = $('screenshotBtn'); btn.textContent = 'Generating...'; btn.disabled = true;
+    $('capProduct').textContent = lastCalc.product || 'Unnamed';
+    var badge = $('capBadge');
+    if (lastCalc.period) { badge.textContent = lastCalc.period; badge.style.display = 'inline-block'; }
+    else { badge.style.display = 'none'; }
+    $('capDate').textContent = new Date().toLocaleDateString('en-GB', {day:'2-digit',month:'short',year:'numeric'});
+    var b = $('capBody'); b.innerHTML = '';
+
+    function sec(title, inner) {
+      var d = document.createElement('div'); d.className = 'cap-section';
+      d.innerHTML = '<div class="cap-section-title">' + title + '</div>' + inner;
+      b.appendChild(d);
+    }
+    function ci(lbl, val, cls, sub) {
+      var vc = cls && cls.indexOf('bg') === -1 ? ' ' + cls : '';
+      return '<div class="cap-item' + (cls ? ' ' + cls : '') + '"><div class="cap-lbl">' + lbl + '</div><div class="cap-val' + vc + '">' + val + '</div>' + (sub ? '<div class="cap-sub">' + sub + '</div>' : '') + '</div>';
+    }
+
+    // (1) Material cost items
+    var costRows = document.querySelectorAll('.cost-item-row');
+    if (costRows.length > 0) {
+      var tr = '';
+      costRows.forEach(function(row) {
+        var nm = row.querySelector('.cost-name')      ? (row.querySelector('.cost-name').value      || '-') : '-';
+        var tq = row.querySelector('.cost-total-qty') ? (row.querySelector('.cost-total-qty').value || '-') : '-';
+        var un = row.querySelector('.cost-unit')      ? (row.querySelector('.cost-unit').value       || '')  : '';
+        var uq = row.querySelector('.cost-used-qty')  ? (row.querySelector('.cost-used-qty').value  || '-') : '-';
+        var co = row.querySelector('.cost-value')     ? (row.querySelector('.cost-value').value      || '0') : '0';
+        var cp = row.querySelector('.cost-per-unit-display') ? row.querySelector('.cost-per-unit-display').textContent : '-';
+        if (nm === '-' && co === '0') return;
+        tr += '<tr><td>' + nm + '</td><td>' + tq + ' ' + un + '</td><td>' + uq + ' ' + un + '</td><td>' + currencySymbol + parseFloat(co).toFixed(2) + '</td><td class="mono">' + cp + '</td></tr>';
+      });
+      if (tr) sec('(1) Material / Ingredient Costs',
+        '<table class="cap-table"><thead><tr><th>Item</th><th>Qty/Weight</th><th>Used/Product</th><th>Price Paid</th><th>Cost/Product</th></tr></thead><tbody>' + tr + '</tbody></table>' +
+        '<div style="display:flex;justify-content:flex-end;margin-top:5px;"><span style="font-size:0.66rem;font-weight:700;color:#533AFD;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:2px 9px;">Material cost/unit: ' + fmt(lastCalc.materialCpu || 0) + '</span></div>'
+      );
+    }
+
+    // (2) Extra costs
+    var cPkgM = parseFloat(($('pc_cPackaging') || {}).value) || 0;
+    var cLabM = parseFloat(($('pc_cLabor')     || {}).value) || 0;
+    var cOthM = parseFloat(($('pc_cOtherVar')  || {}).value) || 0;
+    var cOHM  = parseFloat(($('pc_cOverhead')  || {}).value) || 0;
+    if (cPkgM + cLabM + cOthM + cOHM > 0) {
+      var exItems = [['Packaging',cPkgM],['Labour',cLabM],['Other Variable',cOthM],['Overhead',cOHM]].filter(function(r) { return r[1] > 0; });
+      var et = '<table class="cap-table"><thead><tr><th>Type</th><th>Per Unit</th></tr></thead><tbody>';
+      exItems.forEach(function(r) { et += '<tr><td>' + r[0] + '</td><td class="mono">' + fmt(r[1]) + '</td></tr>'; });
+      et += '</tbody></table>';
+      sec('(2) Extra Costs (per unit)', et);
+    }
+
+    // (3) Pricing
+    var mg = parseFloat($('pc_profitMargin').value) || 0;
+    var sg = lastCalc.suggested || 0;
+    var qp = $('quantityPeriod').value;
+    var ps = '<div class="cap-grid-2">' + ci('Quantity', lastCalc.qty + ' units' + (qp ? ' / ' + qp : ''), '') + ci('Selling Price', fmt(lastCalc.price), 'purple') + '</div>';
+    if (sg > 0) ps += '<div style="font-size:0.63rem;color:#533AFD;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:4px 9px;margin-top:-4px;">Suggested at ' + mg + '% margin: ' + fmt(sg) + '</div>';
+    sec('(3) Production & Pricing', ps);
+
+    // (4) Results
+    var mp = lastCalc.margin;
+    var bc = mp < 0 ? '#dc2626' : mp < 10 ? '#f97316' : mp < 25 ? '#eab308' : '#16a34a';
+    var bw = Math.min(Math.max(mp, 0), 100);
+    var rh =
+      '<div class="cap-grid">' + ci('Material/Unit', fmt(lastCalc.materialCpu || 0), '') + ci('Extra/Unit', fmt(lastCalc.extraCpu || 0), '') + ci('Total Cost/Unit', fmt(lastCalc.cpu), '') + '</div>' +
+      '<div class="cap-grid-2">' + ci('Total Cost', fmt(lastCalc.totalCost), '', lastCalc.qty + ' x ' + fmt(lastCalc.cpu)) + ci('Revenue', fmt(lastCalc.revenue), 'blue-bg', lastCalc.qty + ' x ' + fmt(lastCalc.price)) + '</div>' +
+      '<div class="cap-grid-2" style="margin-bottom:6px;">' + ci('Net Profit', fmt(lastCalc.profit), lastCalc.profit >= 0 ? 'green-bg' : 'red-bg', 'Revenue - Total Cost') + ci('Profit %', fmtPct(lastCalc.profitPct), lastCalc.profitPct >= 0 ? 'green-bg' : 'red-bg', 'Profit / Cost x 100') + '</div>' +
+      '<div style="background:#f8fafc;border:1px solid #f1f5f9;border-radius:7px;padding:8px 10px;">' +
+        '<div style="display:flex;justify-content:space-between;align-items:center;">' +
+          '<span style="font-size:0.6rem;font-weight:700;color:#94a3b8;text-transform:uppercase;letter-spacing:0.5px;">Margin Health</span>' +
+          '<span style="font-size:0.85rem;font-weight:800;color:' + bc + ';">' + fmtPct(mp) + ' net margin</span>' +
+        '</div>' +
+        '<div class="cap-margin-bar"><div class="cap-margin-fill" style="width:' + bw + '%;background:' + bc + ';"></div></div>' +
+        '<div style="font-size:0.58rem;color:#94a3b8;margin-top:2px;">' + ($('marginHint') ? $('marginHint').textContent : '') + '</div>' +
+      '</div>';
+    sec('(4) Results', rh);
+
+    // (5) Capital
+    var cap = parseFloat($('capitalInput') ? $('capitalInput').value : '');
+    if (!isNaN(cap) && cap > 0) {
+      var cu = lastCalc.totalCost; var cr = Math.max(cap - cu, 0);
+      var roi = ((lastCalc.profit / cap) * 100).toFixed(1);
+      var up  = Math.min((cu / cap) * 100, 100);
+      sec('(5) Capital Overview',
+        '<div class="cap-grid-2">' + ci('Starting Capital', fmt(cap), '') + ci('Capital Used', fmt(cu), 'red-bg', up.toFixed(1) + '% of capital') + '</div>' +
+        '<div class="cap-grid-2">' + ci('Remaining', fmt(cr), '', (100 - up).toFixed(1) + '% left') + ci('ROI', (parseFloat(roi) >= 0 ? '+' : '') + roi + '%', lastCalc.profit >= 0 ? 'green-bg' : 'red-bg', 'Return: ' + fmt(cap + lastCalc.profit)) + '</div>'
+      );
+    }
+
+    if (typeof html2canvas === 'undefined') {
+      alert('Screenshot library not loaded yet. Please try again.');
+      btn.textContent = 'Save Screenshot'; btn.disabled = false; return;
+    }
+    html2canvas($('captureCard'), {scale:2.5, useCORS:true, backgroundColor:'#fff'}).then(function(canvas) {
+      var slug = (lastCalc.product || 'product').toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30);
+      var date = new Date().toISOString().slice(0, 10);
+      var a = document.createElement('a');
+      a.download = 'openstartup_' + slug + '_' + date + '.png';
+      a.href = canvas.toDataURL('image/png'); a.click();
+      btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Saved!';
+      btn.disabled = false; confetti();
+      setTimeout(function() {
+        btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M6.5 2H3a1 1 0 0 0-1 1v3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 2H15a1 1 0 0 1 1 1v3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M6.5 16H3a1 1 0 0 1-1-1v-3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><path d="M11.5 16H15a1 1 0 0 0 1-1v-3.5" stroke="white" stroke-width="1.6" stroke-linecap="round"/><circle cx="9" cy="9" r="3" stroke="white" stroke-width="1.6"/></svg> Save Screenshot';
+      }, 2500);
+    }).catch(function() { alert('Screenshot failed. Please try again.'); btn.textContent = 'Save Screenshot'; btn.disabled = false; });
+  }
+
+  // ── Export CSV ────────────────────────────────────────────────────────────
+  function exportCSV() {
+    if (!lastCalc) { alert('Calculate first!'); return; }
+    var rows = [
+      ['OpenStartup — Profit & Pricing Calculator'], [''],
+      ['Product / Service', lastCalc.product],
+      ['Period', lastCalc.period || 'None'], [''],
+      ['--- COST ITEMS ---'],
+    ];
+    document.querySelectorAll('.cost-item-row').forEach(function(row, i) {
+      var name      = row.querySelector('.cost-name')      ? row.querySelector('.cost-name').value      || '—' : '—';
+      var totalQty  = row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value || '—' : '—';
+      var usedQty   = row.querySelector('.cost-used-qty')  ? row.querySelector('.cost-used-qty').value  || '—' : '—';
+      var unit      = row.querySelector('.cost-unit')      ? row.querySelector('.cost-unit').value       || ''  : '';
+      var totalCost = row.querySelector('.cost-value')     ? row.querySelector('.cost-value').value      || '0' : '0';
+      var cpuEl     = row.querySelector('.cost-per-unit-display');
+      var cpu       = cpuEl ? cpuEl.textContent : '—';
+      rows.push(['Item ' + (i + 1), name, 'Qty bought: ' + totalQty, 'Weight/size: ' + usedQty + ' ' + unit, 'Price paid: ' + currencySymbol + totalCost, 'Cost/product: ' + cpu]);
+    });
+    rows = rows.concat([
+      [''], ['--- INPUTS ---'],
+      ['Quantity', lastCalc.qty],
+      ['Selling Price', currencySymbol + lastCalc.price.toFixed(2)],
+      [''], ['--- RESULTS ---'],
+      ['Cost Per Unit',     fmt(lastCalc.cpu)],
+      ['Total Cost',        fmt(lastCalc.totalCost)],
+      ['Revenue',           fmt(lastCalc.revenue)],
+      ['Net Profit',        fmt(lastCalc.profit)],
+      ['Profit %',          fmtPct(lastCalc.profitPct)],
+      ['Net Profit Margin', fmtPct(lastCalc.margin)],
+      [''], ['Generated by OpenStartup · euphorya.co'],
+    ]);
+    var csv = rows.map(function(r) { return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
+    var slug = lastCalc.product.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30);
+    var date = new Date().toISOString().slice(0, 10);
+    var blob = new Blob([csv], { type: 'text/csv' });
+    var a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'openstartup_' + slug + '_' + date + '.csv';
+    a.click();
+    var btn = $('csvBtn');
+    btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Exported!';
+    setTimeout(function() { btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="white" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg> Export CSV'; }, 2500);
+  }
+
+  // ── Share ─────────────────────────────────────────────────────────────────
+  function shareResults() {
+    if (!lastCalc) { alert('Calculate first!'); return; }
+    var msg = '📊 *' + (lastCalc.product || 'Product') + ' — OpenStartup Results*\n\n' +
+      '💰 Cost/Unit: ' + fmt(lastCalc.cpu) + '\n' +
+      '📦 Total Cost: ' + fmt(lastCalc.totalCost) + '\n' +
+      '💵 Revenue: ' + fmt(lastCalc.revenue) + '\n' +
+      '✅ Net Profit: ' + fmt(lastCalc.profit) + '\n' +
+      '📈 Margin: ' + fmtPct(lastCalc.margin) + '\n\n' +
+      'Calculated with openstartup.xyz';
+    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+  }
+
+  // ── Smart Pricing helpers ─────────────────────────────────────────────────
+  function pcUpdateSlider() {
+    if (!$('pc_profitMargin')) return;
+    var val = $('pc_profitMargin').value;
+    if ($('pc_marginBadge')) $('pc_marginBadge').textContent = val + '%';
+    $('pc_profitMargin').style.background = 'linear-gradient(to right, #533AFD ' + (val / 80 * 100) + '%, #e5e7eb ' + (val / 80 * 100) + '%)';
+  }
+
+  function pcApplyPreset() {
+    var type = $('pc_businessType') ? $('pc_businessType').value : '';
+    if (!type) return;
+    // { packaging, labor, otherVar, overhead }
+    var presets = {
+      food:        { packaging: 0.5,  labor: 1.5,  otherVar: 0.8,  overhead: 0.5  },
+      bakery:      { packaging: 0.8,  labor: 2.0,  otherVar: 1.0,  overhead: 0.8  },
+      catering:    { packaging: 1.5,  labor: 8.0,  otherVar: 2.0,  overhead: 2.0  },
+      snack:       { packaging: 0.4,  labor: 0.8,  otherVar: 0.3,  overhead: 0.2  },
+      drinks:      { packaging: 0.6,  labor: 0.5,  otherVar: 0.4,  overhead: 0.3  },
+      homecook:    { packaging: 0.5,  labor: 2.0,  otherVar: 0.5,  overhead: 0.2  },
+      tshirt:      { packaging: 1.0,  labor: 2.0,  otherVar: 0.5,  overhead: 0.5  },
+      hijab:       { packaging: 1.0,  labor: 2.5,  otherVar: 0.5,  overhead: 0.5  },
+      accessories: { packaging: 0.5,  labor: 3.0,  otherVar: 0.3,  overhead: 0.4  },
+      shoes:       { packaging: 2.0,  labor: 4.0,  otherVar: 0.8,  overhead: 1.0  },
+      bags:        { packaging: 1.5,  labor: 5.0,  otherVar: 0.5,  overhead: 1.0  },
+      tailoring:   { packaging: 0.5,  labor: 8.0,  otherVar: 0.5,  overhead: 1.5  },
+      beauty:      { packaging: 1.0,  labor: 1.0,  otherVar: 0.5,  overhead: 0.5  },
+      skincare:    { packaging: 1.5,  labor: 1.5,  otherVar: 0.5,  overhead: 0.5  },
+      haircare:    { packaging: 1.0,  labor: 1.0,  otherVar: 0.5,  overhead: 0.5  },
+      spa:         { packaging: 0.5,  labor: 15.0, otherVar: 2.0,  overhead: 5.0  },
+      nails:       { packaging: 1.0,  labor: 10.0, otherVar: 1.0,  overhead: 3.0  },
+      candles:     { packaging: 1.5,  labor: 2.0,  otherVar: 0.5,  overhead: 0.5  },
+      craft:       { packaging: 0.8,  labor: 4.0,  otherVar: 0.3,  overhead: 0.3  },
+      printing:    { packaging: 0.5,  labor: 1.5,  otherVar: 1.0,  overhead: 1.0  },
+      flowers:     { packaging: 2.0,  labor: 3.0,  otherVar: 0.5,  overhead: 1.0  },
+      gifts:       { packaging: 3.0,  labor: 2.0,  otherVar: 0.5,  overhead: 0.5  },
+      stationery:  { packaging: 0.5,  labor: 1.0,  otherVar: 0.3,  overhead: 0.3  },
+      consulting:  { packaging: 0.0,  labor: 50.0, otherVar: 10.0, overhead: 20.0 },
+      freelance:   { packaging: 0.0,  labor: 40.0, otherVar: 5.0,  overhead: 10.0 },
+      cleaning:    { packaging: 1.0,  labor: 20.0, otherVar: 5.0,  overhead: 5.0  },
+      tutoring:    { packaging: 0.5,  labor: 30.0, otherVar: 2.0,  overhead: 3.0  },
+      photography: { packaging: 0.0,  labor: 60.0, otherVar: 10.0, overhead: 15.0 },
+      repair:      { packaging: 1.0,  labor: 25.0, otherVar: 5.0,  overhead: 5.0  },
+      delivery:    { packaging: 1.0,  labor: 8.0,  otherVar: 5.0,  overhead: 2.0  },
+      digital:     { packaging: 0.0,  labor: 20.0, otherVar: 5.0,  overhead: 5.0  },
+      software:    { packaging: 0.0,  labor: 80.0, otherVar: 10.0, overhead: 20.0 },
+      content:     { packaging: 0.0,  labor: 30.0, otherVar: 5.0,  overhead: 5.0  },
+      ecommerce:   { packaging: 2.0,  labor: 2.0,  otherVar: 3.0,  overhead: 2.0  },
+      plants:      { packaging: 1.5,  labor: 1.5,  otherVar: 0.5,  overhead: 0.5  },
+      pets:        { packaging: 1.0,  labor: 5.0,  otherVar: 1.0,  overhead: 2.0  },
+      retail:      { packaging: 1.0,  labor: 2.0,  otherVar: 1.0,  overhead: 2.0  },
+      other:       { packaging: 1.0,  labor: 5.0,  otherVar: 1.0,  overhead: 1.0  },
+    };
+    var p = presets[type]; if (!p) return;
+    if ($('pc_cPackaging')) $('pc_cPackaging').value = p.packaging;
+    if ($('pc_cLabor'))     $('pc_cLabor').value     = p.labor;
+    if ($('pc_cOtherVar'))  $('pc_cOtherVar').value  = p.otherVar;
+    if ($('pc_cOverhead'))  $('pc_cOverhead').value   = p.overhead;
+    calculate();
+  }
+
+  // ── Testimonials ──────────────────────────────────────────────────────────
+  var tCurrent = 0;
+  var testimonials = [
+    { name:'Aishah M.', title:'Kuih seller · Malaysia', color:'linear-gradient(135deg,#f97316,#fb923c)', bgColor:'f97316', initial:'A', text:'Before this I just guessed my prices. Now I know exactly my cost per piece and what to charge. Sold out every week!' },
+    { name:'Budi S.',   title:'Warung owner · Indonesia', color:'linear-gradient(135deg,#0ea5e9,#38bdf8)', bgColor:'0ea5e9', initial:'B', text:'Simple and fast. I typed my ingredients and it told me my selling price in seconds. My profit went from almost nothing to 35%.' },
+    { name:'Chloe T.',  title:'Bake sale · Singapore', color:'linear-gradient(135deg,#8b5cf6,#a78bfa)', bgColor:'8b5cf6', initial:'C', text:'The screenshot feature is amazing — I share my pricing breakdown with my customers and they trust me more now.' },
+    { name:'Diana P.',  title:'Freelance designer · Philippines', color:'linear-gradient(135deg,#ec4899,#f472b6)', bgColor:'ec4899', initial:'D', text:'Used the consulting preset and set my labour rate. Finally pricing my services correctly. Doubled my rate!' },
+    { name:'Eko W.',    title:'Snack business · Indonesia', color:'linear-gradient(135deg,#22c55e,#4ade80)', bgColor:'22c55e', initial:'E', text:'The capital tracker shows how much I have left after buying ingredients. Very helpful to plan my weekly batches.' },
+    { name:'Farah Z.',  title:'Tudung seller · Malaysia', color:'linear-gradient(135deg,#f59e0b,#fbbf24)', bgColor:'f59e0b', initial:'F', text:'I was underselling by 40%! The suggested price feature opened my eyes. Now I make real profit every month.' },
+    { name:'Grace L.',  title:'Cake shop · Singapore', color:'linear-gradient(135deg,#06b6d4,#67e8f9)', bgColor:'06b6d4', initial:'G', text:'I love how it breaks down material, packaging and labour separately. My costing is so much more accurate now.' },
+    { name:'Hassan A.', title:'Food truck · UAE', color:'linear-gradient(135deg,#dc2626,#f87171)', bgColor:'dc2626', initial:'H', text:'Changed currency to AED and everything updated. Works perfectly for my market. The CSV export is great for my records.' },
+    { name:'Iris C.',   title:'Pottery studio · Taiwan', color:'linear-gradient(135deg,#7c3aed,#a78bfa)', bgColor:'7c3aed', initial:'I', text:'As a small maker, understanding my real cost vs price was always confusing. This tool made it crystal clear.' },
+    { name:'Jay K.',    title:'Streetwear brand · Thailand', color:'linear-gradient(135deg,#0f172a,#334155)', bgColor:'533AFD', initial:'J', text:'T-shirt preset filled my extra costs automatically. Saved me 30 minutes of calculation. Great tool for new sellers!' },
+  ];
+
+  function renderTestimonials() {
+    var inner = $('tInner');
+    var dotsWrap = $('tnavDots');
+    inner.innerHTML = '';
+    dotsWrap.innerHTML = '';
+    testimonials.forEach(function(t, i) {
+      var stars = '<div class="t-stars">' + '<svg width="13" height="13" viewBox="0 0 24 24" fill="#f59e0b"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>'.repeat(5) + '</div>';
+      var card = document.createElement('div');
+      card.className = 't-card';
+      card.innerHTML =
+        '<div class="t-card-top">' +
+          '<div class="t-avatar" style="background:' + t.color + ';">' + t.initial + '</div>' +
+          '<div class="t-meta">' +
+            '<div class="t-name">' + t.name + '</div>' +
+            '<div class="t-title-country">' + t.title + '</div>' +
+            stars +
+          '</div>' +
+        '</div>' +
+        '<div class="t-text">' + t.text + '</div>' +
+        '<div class="t-counter">' + (i + 1) + ' / ' + testimonials.length + '</div>';
+      inner.appendChild(card);
+      var dot = document.createElement('span');
+      dot.className = 'tnav-dot' + (i === 0 ? ' active' : '');
+      dotsWrap.appendChild(dot);
+    });
+    updateTestimonialNav();
+  }
+
+  function scrollTestimonials(dir) {
+    tCurrent = Math.max(0, Math.min(tCurrent + dir, testimonials.length - 1));
+    $('tInner').style.transform = 'translateX(-' + (tCurrent * 100) + '%)';
+    document.querySelectorAll('.tnav-dot').forEach(function(d, i) { d.className = 'tnav-dot' + (i === tCurrent ? ' active' : ''); });
+    updateTestimonialNav();
+  }
+
+  function updateTestimonialNav() {
+    $('tnavPrev').disabled = tCurrent === 0;
+    $('tnavNext').disabled = tCurrent === testimonials.length - 1;
+  }
+
+  // Touch/swipe support
+  var tTouchStart = 0;
+  document.addEventListener('DOMContentLoaded', function() {
+    var vp = $('testimonialsViewport');
+    if (vp) {
+      vp.addEventListener('touchstart', function(e) { tTouchStart = e.touches[0].clientX; }, { passive: true });
+      vp.addEventListener('touchend', function(e) {
+        var diff = tTouchStart - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) scrollTestimonials(diff > 0 ? 1 : -1);
+      });
+    }
+  });
+
+  // ── Boot ──────────────────────────────────────────────────────────────────
+  pcUpdateSlider();
+  addCostRow();
+  renderTestimonials();
+
+</script>
+
+<script async src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+</body>
+</html>
