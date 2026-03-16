@@ -783,7 +783,7 @@
     document.getElementById('copyrightYear').textContent = now > start ? start + '–' + now : String(start);
   })();
 
-  var MAX_ROWS  = 100;
+  var MAX_ROWS  = 99;
   var rowCount  = 0;
   var lastCalc  = null;
   var wasProfit = false;
@@ -865,7 +865,7 @@
     var btn = $('addCostBtn');
     var count = document.querySelectorAll('.cost-item-row').length;
     btn.disabled = count >= MAX_ROWS;
-    btn.textContent = count === 0 ? '+ Add cost item' : count >= MAX_ROWS ? 'Maximum 100 items reached' : '+ Add another item ↓ (' + count + ' added)';
+    btn.textContent = count === 0 ? '+ Add cost item' : count >= MAX_ROWS ? 'Maximum 99 items reached' : '+ Add another item ↓ (' + count + ' added)';
   }
 
   function getCostPerUnit() {
