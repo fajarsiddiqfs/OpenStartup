@@ -322,6 +322,15 @@
       transition: color 0.15s;
     }
     .footer-nav a:hover { color: var(--accent); }
+
+    /* DEMO BUTTON */
+    .demo-bar { background: linear-gradient(135deg,#f0fdf4,#dcfce7); border: 1.5px solid #86efac; border-radius: var(--radius); padding: 12px 16px; margin-bottom: 14px; display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+    .demo-bar-text { font-size: 0.78rem; color: #15803d; font-weight: 600; line-height: 1.4; }
+    .demo-bar-text span { font-size: 0.68rem; color: #16a34a; font-weight: 400; display: block; margin-top: 1px; }
+    .demo-btn { background: #16a34a; color: #fff; border: none; border-radius: 99px; padding: 8px 18px; font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.8rem; font-weight: 700; cursor: pointer; white-space: nowrap; transition: background 0.15s; flex-shrink: 0; }
+    .demo-btn:hover { background: #15803d; }
+    .demo-btn.reset { background: var(--bg); color: var(--muted); border: 1.5px solid var(--border2); }
+    .demo-btn.reset:hover { background: var(--border); }
   </style>
 </head>
 <body>
@@ -384,6 +393,16 @@
     <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
   </div>
 
+
+  <!-- DEMO BAR -->
+  <div class="demo-bar">
+    <div class="demo-bar-text">
+      See how it works
+      <span>Product: "Popia Snack Nestum" real numbers.</span>
+    </div>
+    <button class="demo-btn" onclick="loadDemo()">▶ Try Demo</button>
+  </div>
+
   <!-- CAPITAL TRACKER -->
   <div class="capital-bar" id="capitalBar">
     <div class="capital-label">Starting Capital (optional)</div>
@@ -392,7 +411,7 @@
       <input type="number" id="capitalInput" placeholder="0" min="0" step="1" oninput="calculate()" />
     </div>
     <div class="capital-right" id="capitalRight" style="display:none;">
-      <div class="capital-stat"><div class="capital-stat-label">Used</div><div class="capital-stat-val red" id="capitalUsed">—</div></div>
+      <div class="capital-stat"><div class="capital-stat-label">Used</div><div class="capital-stat-val" id="capitalUsed">—</div></div>
       <div class="capital-divider"></div>
       <div class="capital-stat"><div class="capital-stat-label">Remaining</div><div class="capital-stat-val" id="capitalRemaining">—</div></div>
       <div class="capital-divider"></div>
@@ -742,7 +761,7 @@
       <div class="card-title" style="margin-bottom:12px;">Capital Overview</div>
       <div class="capital-result-grid">
         <div class="cap-res-item"><div class="cap-res-label">Starting Capital</div><div class="cap-res-val" id="crCapital">—</div></div>
-        <div class="cap-res-item red-bg"><div class="cap-res-label">Capital Used</div><div class="cap-res-val theme-red" id="crUsed">—</div><div class="cap-res-sub" id="crUsedPct">—</div></div>
+        <div class="cap-res-item" id="crUsedCard"><div class="cap-res-label">Capital Used</div><div class="cap-res-val" id="crUsed">—</div><div class="cap-res-sub" id="crUsedPct">—</div></div>
         <div class="cap-res-item"><div class="cap-res-label">Capital Remaining</div><div class="cap-res-val" id="crRemaining">—</div><div class="cap-res-sub" id="crRemainingPct">—</div></div>
         <div class="cap-res-item green-bg"><div class="cap-res-label">Return on Investment</div><div class="cap-res-val" id="crReturn">—</div><div class="cap-res-sub" id="crReturnPct">—</div></div>
       </div>
@@ -894,7 +913,6 @@
     var row  = document.createElement('div');
     row.className = 'cost-item-row';
     var ph   = namePHs[(rowCount - 1) % namePHs.length];
-    var opts = unitOpts.map(function(u) { return '<option value="' + u + '">' + u + '</option>'; }).join('');
     row.innerHTML =
       '<div class="cost-item-num">Item ' + rowCount + '</div>' +
       '<button type="button" class="remove-btn" onclick="removeCostRow(this)" title="Remove">×</button>' +
@@ -902,16 +920,13 @@
         '<label>Item Name</label>' +
         '<input type="text" class="no-prefix cost-name" placeholder="' + ph + '" />' +
       '</div>' +
-      '<div class="cost-fields-row three-col">' +
-        '<div class="cost-field-group"><label style="font-size:0.58rem;">Used per Product</label><input type="number" class="cost-used-qty no-prefix" placeholder="e.g. 60" min="0" step="any" /></div>' +
-        '<div class="cost-field-group"><label>Qty / Weight</label><input type="number" class="cost-total-qty no-prefix" placeholder="e.g. 500" min="0" step="any" /></div>' +
-        '<div class="cost-field-group"><label>Unit</label><select class="cost-unit">' + opts + '</select></div>' +
+      '<div class="cost-fields-row two-col" style="margin-bottom:8px;">' +
+        '<div class="cost-field-group"><label>Cost Paid</label><div class="input-wrap"><span class="prefix">' + currencySymbol + '</span><input type="number" class="cost-value" placeholder="0.00" min="0" step="0.01" /></div></div>' +
+        '<div class="cost-field-group"><label>Makes (products)</label><input type="number" class="cost-total-qty no-prefix" placeholder="e.g. 50" min="0" step="1" /></div>' +
       '</div>' +
-      '<div class="cost-hint">e.g. Sticker — Used per Product: 1 · Qty/Weight: 50 · Unit: pcs · Price: $9.58 → makes 50 products</div>' +
-      '<div class="cost-fields-row two-col" style="margin-top:8px;">' +
-        '<div class="cost-field-group"><label>Price Paid</label><div class="input-wrap"><span class="prefix">' + currencySymbol + '</span><input type="number" class="cost-value" placeholder="0.00" min="0" step="0.01" /></div></div>' +
-        '<div class="cost-field-group"><label>Cost / Product ★</label><div class="cost-per-unit-display">—</div></div>' +
-        '<div class="cost-max-bottles" style="font-size:0.62rem;color:var(--muted);margin-top:5px;text-align:right;"></div>' +
+      '<div style="display:flex;align-items:center;justify-content:space-between;background:var(--acc-lt);border:1.5px solid var(--acc-bd);border-radius:9px;padding:8px 12px;">' +
+        '<span style="font-size:0.72rem;font-weight:600;color:var(--muted);">Cost per product</span>' +
+        '<span class="cost-per-unit-display" style="font-size:0.92rem;font-weight:800;color:var(--accent);">—</span>' +
       '</div>';
     row.querySelectorAll('input').forEach(function(inp) { inp.addEventListener('input', calculate); });
     row.querySelectorAll('select').forEach(function(sel) { sel.addEventListener('change', calculate); });
@@ -954,11 +969,7 @@
       var usedPerUnit = parseFloat(row.querySelector('.cost-used-qty')  ? row.querySelector('.cost-used-qty').value  : 0) || 0;
       var display     = row.querySelector('.cost-per-unit-display');
       var costPerUnit = 0;
-      if (totalCost > 0 && totalQty > 0 && usedPerUnit > 0) {
-        costPerUnit = (totalCost / totalQty) * usedPerUnit;
-        if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
-      } else if (totalCost > 0 && totalQty > 0 && usedPerUnit === 0) {
-        // no usage entered — show cost per 1 unit of qty
+      if (totalCost > 0 && totalQty > 0) {
         costPerUnit = totalCost / totalQty;
         if (display) display.textContent = currencySymbol + costPerUnit.toFixed(4).replace(/\.?0+$/, '');
       } else if (totalCost > 0 && totalQty === 0) {
@@ -988,15 +999,10 @@
     var rows = document.querySelectorAll('.cost-item-row');
     var bottleCounts = [];
     rows.forEach(function(row) {
-      var totalBought = parseFloat(row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value : 0) || 0;
-      var usedPerBottle = parseFloat(row.querySelector('.cost-used-qty') ? row.querySelector('.cost-used-qty').value : 0) || 0;
-      var maxBottlesEl = row.querySelector('.cost-max-bottles');
-      if (totalBought > 0 && usedPerBottle > 0) {
-        var maxB = Math.floor(totalBought / usedPerBottle);
-        bottleCounts.push({ name: row.querySelector('.cost-name') ? (row.querySelector('.cost-name').value || 'Item') : 'Item', max: maxB, totalBought: totalBought, usedPerBottle: usedPerBottle });
-        if (maxBottlesEl) maxBottlesEl.textContent = 'Max: ' + maxB + ' products';
-      } else {
-        if (maxBottlesEl) maxBottlesEl.textContent = '';
+      var makes = parseFloat(row.querySelector('.cost-total-qty') ? row.querySelector('.cost-total-qty').value : 0) || 0;
+      var name = row.querySelector('.cost-name') ? (row.querySelector('.cost-name').value || 'Item') : 'Item';
+      if (makes > 0) {
+        bottleCounts.push({ name: name, max: makes });
       }
     });
 
@@ -1007,13 +1013,13 @@
       $('resBottleneck').textContent = bottleneck.name + ' (max ' + bottleneck.max + ' products)';
       $('bottleneckWrap').style.display = bottleCounts.length > 1 ? 'block' : 'none';
 
-      // Remaining stock per ingredient
-      var stockHtml = '<div style="font-size:0.72rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:6px;">Remaining Stock</div>';
+      // Show max per ingredient
+      var stockHtml = '<div style="font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;">Products each ingredient covers</div>';
       bottleCounts.forEach(function(b) {
-        var remaining = b.totalBought - (b.usedPerBottle * totalBottlesPossible);
-        stockHtml += '<div style="display:flex;justify-content:space-between;font-size:0.78rem;padding:3px 0;border-bottom:1px solid rgba(83,58,253,0.1);">' +
+        var isBottleneck = b.max === totalBottlesPossible;
+        stockHtml += '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.76rem;padding:3px 0;border-bottom:1px solid rgba(83,58,253,0.1);">' +
           '<span style="color:var(--text);">' + b.name + '</span>' +
-          '<span style="color:var(--muted);font-weight:600;">' + remaining.toFixed(1) + ' left</span>' +
+          '<span style="font-weight:700;color:' + (isBottleneck ? '#dc2626' : '#16a34a') + ';">' + b.max + ' products</span>' +
         '</div>';
       });
       $('remainingStockList').innerHTML = stockHtml;
@@ -1115,11 +1121,13 @@
 
     var capital = parseFloat($('capitalInput').value);
     if (!isNaN(capital) && capital > 0) {
-      var capUsed      = totalCost;
+      // capUsed = total ingredient cost (what you spent buying stock)
+      var capUsed      = getCostPerUnit() * qty;
       var capRemaining = capital - capUsed;
       var capReturn    = capital + profit;
       var usedPct      = Math.min((capUsed / capital) * 100, 100);
       var roiPct       = (profit / capital) * 100;
+      var withinBudget = capUsed <= capital;
       $('capitalRight').style.display   = 'flex';
       $('capitalUsed').textContent      = fmt(capUsed);
       $('capitalRemaining').textContent = fmt(Math.max(capRemaining, 0));
@@ -1128,12 +1136,17 @@
       $('crCapital').textContent    = fmt(capital);
       $('crUsed').textContent       = fmt(capUsed);
       $('crUsedPct').textContent    = usedPct.toFixed(1) + '% of capital';
-      $('crRemaining').textContent  = fmt(Math.max(capRemaining, 0));
+      $('crRemaining').textContent  = capRemaining < 0 ? fmt(0) : fmt(capRemaining);
       $('crRemainingPct').textContent = capRemaining < 0 ? 'Over budget by ' + fmt(Math.abs(capRemaining)) : (100 - usedPct).toFixed(1) + '% left';
       $('crReturn').textContent     = fmt(capReturn);
       $('crReturnPct').textContent  = (roiPct >= 0 ? '+' : '') + roiPct.toFixed(1) + '% ROI';
+      // Colours — all green if within budget, red if over
+      $('crUsed').className         = 'cap-res-val ' + (withinBudget ? 'theme-green' : 'theme-red');
+      $('crRemaining').className    = 'cap-res-val ' + (capRemaining >= 0 ? 'theme-green' : 'theme-red');
       $('crReturn').className       = 'cap-res-val ' + (capReturn >= capital ? 'theme-green' : 'theme-red');
-      $('capProgressFill').style.width = usedPct + '%';
+      $('crUsedCard').className = 'cap-res-item ' + (withinBudget ? 'green-bg' : 'red-bg');
+      $('capProgressFill').style.width      = usedPct + '%';
+      $('capProgressFill').style.background = withinBudget ? '#16a34a' : '#dc2626';
       $('cpUsedLabel').textContent      = 'Used ' + usedPct.toFixed(0) + '%';
       $('cpRemainingLabel').textContent = 'Remaining ' + Math.max(0, 100 - usedPct).toFixed(0) + '%';
     } else {
@@ -1214,15 +1227,13 @@
       costRows.forEach(function(row) {
         var nm = row.querySelector('.cost-name')      ? (row.querySelector('.cost-name').value      || '-') : '-';
         var tq = row.querySelector('.cost-total-qty') ? (row.querySelector('.cost-total-qty').value || '-') : '-';
-        var un = row.querySelector('.cost-unit')      ? (row.querySelector('.cost-unit').value       || '')  : '';
-        var uq = row.querySelector('.cost-used-qty')  ? (row.querySelector('.cost-used-qty').value  || '-') : '-';
         var co = row.querySelector('.cost-value')     ? (row.querySelector('.cost-value').value      || '0') : '0';
         var cp = row.querySelector('.cost-per-unit-display') ? row.querySelector('.cost-per-unit-display').textContent : '-';
         if (nm === '-' && co === '0') return;
-        tr += '<tr><td>' + nm + '</td><td>' + tq + ' ' + un + '</td><td>' + uq + ' ' + un + '</td><td>' + currencySymbol + parseFloat(co).toFixed(2) + '</td><td class="mono">' + cp + '</td></tr>';
+        tr += '<tr><td>' + nm + '</td><td>' + currencySymbol + parseFloat(co).toFixed(2) + '</td><td>' + tq + '</td><td class="mono">' + cp + '</td></tr>';
       });
       if (tr) sec('(1) Material / Ingredient Costs',
-        '<table class="cap-table"><thead><tr><th>Item</th><th>Qty/Weight</th><th>Used/Product</th><th>Price Paid</th><th>Cost/Product</th></tr></thead><tbody>' + tr + '</tbody></table>' +
+        '<table class="cap-table"><thead><tr><th>Item</th><th>Cost Paid</th><th>Makes</th><th>Cost/Product</th></tr></thead><tbody>' + tr + '</tbody></table>' +
         '<div style="display:flex;justify-content:flex-end;margin-top:5px;"><span style="font-size:0.66rem;font-weight:700;color:#533AFD;background:#ede9fe;border:1px solid #c4b5fd;border-radius:6px;padding:2px 9px;">Material cost/unit: ' + fmt(lastCalc.materialCpu || 0) + '</span></div>'
       );
     }
@@ -1287,7 +1298,8 @@
       var date = new Date().toISOString().slice(0, 10);
       var a = document.createElement('a');
       a.download = 'openstartup_' + slug + '_' + date + '.png';
-      a.href = canvas.toDataURL('image/png'); a.click();
+      a.href = canvas.toDataURL('image/png');
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
       btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Saved!';
       btn.disabled = false; confetti();
       setTimeout(function() {
@@ -1313,7 +1325,7 @@
       var totalCost = row.querySelector('.cost-value')     ? row.querySelector('.cost-value').value      || '0' : '0';
       var cpuEl     = row.querySelector('.cost-per-unit-display');
       var cpu       = cpuEl ? cpuEl.textContent : '—';
-      rows.push(['Item ' + (i + 1), name, 'Qty bought: ' + totalQty, 'Weight/size: ' + usedQty + ' ' + unit, 'Price paid: ' + currencySymbol + totalCost, 'Cost/product: ' + cpu]);
+      rows.push(['Item ' + (i + 1), name, 'Cost paid: ' + currencySymbol + totalCost, 'Makes: ' + totalQty + ' products', 'Cost/product: ' + cpu]);
     });
     rows = rows.concat([
       [''], ['--- INPUTS ---'],
@@ -1331,11 +1343,13 @@
     var csv = rows.map(function(r) { return r.map(function(c) { return '"' + String(c).replace(/"/g, '""') + '"'; }).join(','); }).join('\n');
     var slug = lastCalc.product.toLowerCase().replace(/[^a-z0-9]+/g, '-').slice(0, 30);
     var date = new Date().toISOString().slice(0, 10);
-    var blob = new Blob([csv], { type: 'text/csv' });
+    var blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+    var url = URL.createObjectURL(blob);
     var a = document.createElement('a');
-    a.href = URL.createObjectURL(blob);
+    a.href = url;
     a.download = 'openstartup_' + slug + '_' + date + '.csv';
-    a.click();
+    document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    setTimeout(function() { URL.revokeObjectURL(url); }, 1000);
     var btn = $('csvBtn');
     btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><path d="M3 9l4 4 8-8" stroke="white" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/></svg> Exported!';
     setTimeout(function() { btn.innerHTML = '<svg width="17" height="17" viewBox="0 0 18 18" fill="none"><rect x="3" y="2" width="12" height="14" rx="2" stroke="white" stroke-width="1.6"/><path d="M6 6h6M6 9h6M6 12h4" stroke="white" stroke-width="1.4" stroke-linecap="round"/></svg> Export CSV'; }, 2500);
@@ -1344,17 +1358,143 @@
   // ── Share ─────────────────────────────────────────────────────────────────
   function shareResults() {
     if (!lastCalc) { alert('Calculate first!'); return; }
-    var msg = '📊 *' + (lastCalc.product || 'Product') + ' — OpenStartup Results*\n\n' +
-      '💰 Cost/Unit: ' + fmt(lastCalc.cpu) + '\n' +
-      '📦 Total Cost: ' + fmt(lastCalc.totalCost) + '\n' +
-      '💵 Revenue: ' + fmt(lastCalc.revenue) + '\n' +
-      '✅ Net Profit: ' + fmt(lastCalc.profit) + '\n' +
-      '📈 Margin: ' + fmtPct(lastCalc.margin) + '\n\n' +
-      'Calculated with openstartup.xyz';
-    window.open('https://wa.me/?text=' + encodeURIComponent(msg), '_blank');
+    var lines = [];
+    lines.push(lastCalc.product || 'Product');
+    lines.push('---');
+    lines.push('Cost per unit: ' + fmt(lastCalc.cpu));
+    lines.push('Total cost: ' + fmt(lastCalc.totalCost));
+    lines.push('Revenue: ' + fmt(lastCalc.revenue));
+    lines.push('Net profit: ' + fmt(lastCalc.profit));
+    lines.push('Profit margin: ' + fmtPct(lastCalc.margin));
+    if (lastCalc.period) lines.push('Period: ' + lastCalc.period);
+    lines.push('---');
+    lines.push('Calculated with openstartup.xyz');
+    var msg = lines.join('\n');
+    var encoded = encodeURIComponent(msg);
+    var choice = confirm('Share via WhatsApp?\n\nOK = WhatsApp   Cancel = Copy text (for Telegram or any app)');
+    if (choice) {
+      window.open('https://wa.me/?text=' + encoded, '_blank');
+    } else {
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(msg).then(function() {
+          alert('Copied! Paste it into Telegram, SMS, or any app.');
+        });
+      } else {
+        var ta = document.createElement('textarea');
+        ta.value = msg;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand('copy');
+        document.body.removeChild(ta);
+        alert('Copied! Paste it into Telegram, SMS, or any app.');
+      }
+    }
   }
 
   // ── Smart Pricing helpers ─────────────────────────────────────────────────
+
+  // ── Demo ──────────────────────────────────────────────────────────────────
+  function loadDemo() {
+    // Clear existing cost rows first
+    document.querySelectorAll('.cost-item-row').forEach(function(r) { r.remove(); });
+    rowCount = 0;
+
+    // Capital
+    $('capitalInput').value = '100';
+
+    // Product name
+    $('productName').value = 'Popia Snack';
+
+    // Business type
+    if ($('pc_businessType')) {
+      $('pc_businessType').value = 'snack';
+      pcApplyPreset();
+    }
+
+    // Demo ingredients: name, costPaid, makes
+    var items = [
+      { name: 'Nestum (500g)', cost: '5.28', makes: '8' },
+      { name: 'Horlick (900g)', cost: '11.00', makes: '15' },
+      { name: 'Icing Sugar (500g)', cost: '2.00', makes: '25' },
+      { name: 'Popiah (40pcs)', cost: '2.35', makes: '20' },
+      { name: 'Cooking Oil (5L)', cost: '11.00', makes: '166' },
+      { name: 'Sticker (50pcs)', cost: '9.58', makes: '50' },
+      { name: 'Silver Tape (1pc)', cost: '1.00', makes: '50' },
+      { name: 'Plastic Bag (100pcs)', cost: '5.00', makes: '100' },
+      { name: 'Baking Paper (100pcs)', cost: '5.00', makes: '100' },
+    ];
+
+    items.forEach(function(item) {
+      addCostRow();
+      var rows = document.querySelectorAll('.cost-item-row');
+      var row = rows[rows.length - 1];
+      if (row.querySelector('.cost-name'))      row.querySelector('.cost-name').value      = item.name;
+      if (row.querySelector('.cost-value'))     row.querySelector('.cost-value').value     = item.cost;
+      if (row.querySelector('.cost-total-qty')) row.querySelector('.cost-total-qty').value = item.makes;
+    });
+
+    // Extra costs (already set by preset, but override with realistic values)
+    $('pc_cPackaging').value = '0.40';
+    $('pc_cLabor').value     = '0.80';
+    $('pc_cOtherVar').value  = '0.30';
+    $('pc_cOverhead').value  = '0.20';
+
+    // Quantity, price, margin
+    $('quantity').value      = '8';
+    $('sellingPrice').value  = '16.00';
+    $('pc_profitMargin').value = '35';
+    pcUpdateSlider();
+
+    calculate();
+
+    // Scroll to results
+    setTimeout(function() {
+      var res = $('resultsCard');
+      if (res) res.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }, 300);
+
+    // Change button to Reset
+    var btn = document.querySelector('.demo-btn');
+    if (btn) {
+      btn.textContent = '✕ Clear Demo';
+      btn.classList.add('reset');
+      btn.onclick = function() { clearDemo(); };
+    }
+  }
+
+  function clearDemo() {
+    // Clear all fields
+    $('capitalInput').value  = '';
+    $('productName').value   = '';
+    $('pc_cPackaging').value = '';
+    $('pc_cLabor').value     = '';
+    $('pc_cOtherVar').value  = '';
+    $('pc_cOverhead').value  = '';
+    $('quantity').value      = '';
+    $('sellingPrice').value  = '';
+    $('pc_profitMargin').value = '30';
+    if ($('pc_businessType')) $('pc_businessType').value = '';
+    pcUpdateSlider();
+
+    // Reset to 1 empty cost row
+    document.querySelectorAll('.cost-item-row').forEach(function(r) { r.remove(); });
+    rowCount = 0;
+    addCostRow();
+    $('resultsCard').classList.remove('visible');
+    $('productionSummary').style.display = 'none';
+
+    // Reset button
+    var btn = document.querySelector('.demo-btn');
+    if (btn) {
+      btn.textContent = '▶ Try Demo';
+      btn.classList.remove('reset');
+      btn.onclick = function() { loadDemo(); };
+    }
+
+    // Scroll back to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
   function pcUpdateSlider() {
     if (!$('pc_profitMargin')) return;
     var val = $('pc_profitMargin').value;
