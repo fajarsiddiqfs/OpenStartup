@@ -1347,6 +1347,13 @@
     $('quantity').value      = '';
     $('sellingPrice').value  = '';
 
+    // Clear capital display
+    $('capitalRight').style.display   = 'none';
+    $('capitalResults').style.display = 'none';
+    $('capitalUsed').textContent      = '—';
+    $('capitalRemaining').textContent = '—';
+    $('capitalReturn').textContent    = '—';
+
     // Reset to 1 empty cost row
     document.querySelectorAll('.cost-item-row').forEach(function(r) { r.remove(); });
     rowCount = 0;
