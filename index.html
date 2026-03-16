@@ -78,7 +78,7 @@
     select {
       width: 100%; background: var(--white); border: 1.5px solid var(--border2); border-radius: 9px;
       color: var(--text); font-family: 'Plus Jakarta Sans', sans-serif; font-size: 0.9rem; font-weight: 500;
-      padding: 10px 28px 10px 11px; outline: none; cursor: pointer;
+      padding: 0 28px 0 11px; height: 44px; outline: none; cursor: pointer;
       -webkit-appearance: none; appearance: none;
       background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%2394a3b8' stroke-width='1.7' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
       background-repeat: no-repeat; background-position: right 10px center; transition: border-color 0.15s;
@@ -404,7 +404,7 @@
       See how it works
       <span>Product: "Popia Snack Nestum" real numbers.</span>
     </div>
-    <button class="demo-btn" onclick="loadDemo()">▶ Try Demo</button>
+    <button class="demo-btn" onclick="loadDemo()"><svg width="11" height="11" viewBox="0 0 24 24" fill="white" style="margin-right:5px;vertical-align:-1px;flex-shrink:0;"><path d="M5 3l14 9-14 9V3z"/></svg>Try Demo</button>
   </div>
 
   <!-- CAPITAL TRACKER -->
@@ -559,7 +559,7 @@
 
     <div class="field">
       <label>Product / Service Name</label>
-      <input type="text" id="productName" class="no-prefix" placeholder="e.g. Popia Snack, Laksa, Burger, T-Shirt, Hijab" oninput="calculate()" />
+      <input type="text" id="productName" class="no-prefix" placeholder="e.g. Popia Snack, Laksa Noodles, Maggi Goreng" oninput="calculate()" />
     </div>
 
     <div class="divider"></div>
@@ -1334,7 +1334,7 @@
     // Change button to Reset
     var btn = document.querySelector('.demo-btn');
     if (btn) {
-      btn.textContent = '✕ Clear Demo';
+      btn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="white" style="margin-right:5px;vertical-align:-1px;"><path d="M18 6L6 18M6 6l12 12" stroke="white" stroke-width="2.5" stroke-linecap="round"/></svg>Clear Demo';
       btn.classList.add('reset');
       btn.onclick = function() { clearDemo(); };
     }
@@ -1364,7 +1364,7 @@
     // Reset button
     var btn = document.querySelector('.demo-btn');
     if (btn) {
-      btn.textContent = '▶ Try Demo';
+      btn.innerHTML = '<svg width="11" height="11" viewBox="0 0 24 24" fill="white" style="margin-right:5px;vertical-align:-1px;"><path d="M5 3l14 9-14 9V3z"/></svg>Try Demo';
       btn.classList.remove('reset');
       btn.onclick = function() { loadDemo(); };
     }
