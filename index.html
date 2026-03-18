@@ -642,7 +642,7 @@
     </div>
 
     <div class="result-row">
-      <div><div class="result-label">Cost Per Bottle</div><div class="result-desc" id="descCpu"></div></div>
+      <div><div class="result-label">Cost Per Product</div><div class="result-desc" id="descCpu"></div></div>
       <div class="result-value" id="resCpu">—</div>
     </div>
     <div class="result-row">
@@ -942,7 +942,7 @@
       $('bottleneckWrap').style.display = bottleCounts.length > 1 ? 'block' : 'none';
 
       // Show max per ingredient
-      var stockHtml = '<div style="font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;">Products each ingredient covers</div>';
+      var stockHtml = '<div style="font-size:0.62rem;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:0.8px;margin-bottom:5px;">Products each item covers</div>';
       bottleCounts.forEach(function(b) {
         var isBottleneck = b.max === totalBottlesPossible;
         stockHtml += '<div style="display:flex;justify-content:space-between;align-items:center;font-size:0.76rem;padding:3px 0;border-bottom:1px solid rgba(83,58,253,0.1);">' +
