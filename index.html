@@ -43,6 +43,7 @@
     .logo { margin-bottom: 10px; display: inline-flex; align-items: center; }
     .logo-text { font-family: 'Work Sans', sans-serif; font-weight: 900; font-size: 2rem; letter-spacing: -1px; color: var(--text); }
     header p { color: var(--muted); font-size: 0.83rem; font-weight: 400; margin-top: 4px; }
+    .logo-tagline-desktop { display: none; }
     .nav-pills { display: flex; gap: 8px; justify-content: center; margin-top: 14px; flex-wrap: wrap; }
     .nav-pill-wrap { position: relative; }
     .nav-pill { display: inline-flex; align-items: center; padding: 7px 14px; border-radius: 99px; background: var(--accent); color: #fff; font-size: 0.78rem; font-weight: 600; text-decoration: none; transition: background 0.15s; }
@@ -345,6 +346,178 @@
     .demo-btn:hover { background: #15803d; }
     .demo-btn.reset { background: var(--bg); color: var(--muted); border: 1.5px solid var(--border2); }
     .demo-btn.reset:hover { background: var(--border); }
+
+    /* ══════════════════════════════════════════════════════════════════════
+       DESKTOP DASHBOARD LAYOUT
+       Activates on real desktop/laptop devices with a mouse (pointer:fine +
+       hover:hover) — this is what actually distinguishes a desktop from an
+       iPad, not screen width (iPads can be 1366px wide, laptops can be
+       1024px wide). Touch-only devices (iPad, phone) never match this query
+       regardless of width, so mobile/iPad views above are untouched.
+       ══════════════════════════════════════════════════════════════════════ */
+    @media (min-width: 1024px) and (pointer: fine) and (hover: hover) {
+      html, body { height: 100%; }
+      body { overflow: hidden; background: #eceef2; }
+
+      /* Hide marketing chrome so the dashboard fits in one screen (footer
+         content below is relocated into the left column instead of hidden) */
+      .wrap > br,
+      #bizToolsTop {
+        display: none !important;
+      }
+
+      .wrap {
+        max-width: 1520px;
+        width: 100%;
+        height: 100vh;
+        margin: 0 auto;
+        padding: 22px 28px;
+        box-sizing: border-box;
+        display: grid;
+        grid-template-columns: minmax(250px, 280px) minmax(380px, 1fr) minmax(340px, 400px);
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+          "top    top   topright"
+          "left   main  right";
+        column-gap: 18px;
+        row-gap: 14px;
+      }
+
+      /* ── TOP BAR ─────────────────────────────────────────────── */
+      header {
+        grid-area: top;
+        padding: 0 2px 14px;
+        margin-bottom: 0;
+        text-align: left;
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        border-bottom: 1.5px solid var(--border);
+      }
+      header p { display: none; }
+      header .logo { margin-bottom: 0; }
+      header .logo-text { font-size: 1.4rem; }
+      .logo-tagline-desktop { display: inline; margin-left: 10px; font-size: 0.8rem; font-weight: 500; color: var(--muted); }
+      .nav-pills { margin-top: 0; margin-left: auto; justify-content: flex-end; }
+
+      .social-proof {
+        grid-area: topright;
+        margin-bottom: 0;
+        padding: 7px 12px;
+        flex-shrink: 0;
+        align-self: center;
+      }
+      .social-avatars .avatar { width: 26px; height: 26px; font-size: 0.62rem; }
+      .social-info { display: flex; align-items: center; gap: 8px; }
+      .social-stars { margin-bottom: 0; }
+      .social-text { white-space: nowrap; }
+
+      /* ── SHARED CARD POLISH FOR DASHBOARD MODE ─────────────────── */
+      .dash-left .demo-bar,
+      .dash-left .capital-bar,
+      .dash-left .ads-placeholder,
+      .dash-left .t-card,
+      #dashCard.card,
+      .dash-right .results-card,
+      .dash-right .action-btns {
+        box-shadow: 0 1px 2px rgba(15, 23, 42, 0.03), 0 4px 14px rgba(15, 23, 42, 0.05);
+      }
+
+      /* ── LEFT COLUMN: demo bar + starting capital + ads + testimonials ── */
+      .dash-left {
+        grid-area: left;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 2px 4px 2px 2px;
+      }
+      .dash-left .demo-bar {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 10px;
+        margin-bottom: 0;
+        flex-shrink: 0;
+      }
+      .dash-left .demo-bar .demo-btn { width: 100%; }
+      .dash-left .capital-bar { margin-bottom: 0; flex-shrink: 0; }
+      .dash-left .ads-placeholder { margin-bottom: 0; flex-shrink: 0; }
+      .dash-left #sponsorNote { display: block !important; margin: -8px 0 0; flex-shrink: 0; }
+      .dash-left .testimonials-wrap { margin-bottom: 0; flex-shrink: 0; }
+      .dash-left .testimonials-title { font-size: 0.6rem; }
+      .dash-left .t-card { padding: 14px; gap: 10px; }
+      .dash-left .t-text { font-size: 0.78rem; line-height: 1.55; }
+      .dash-left .t-avatar { width: 38px; height: 38px; }
+      .dash-left #bizToolsBottom { margin-bottom: 14px; flex-shrink: 0; }
+      .dash-left #phBadge { margin: 0 0 10px; flex-shrink: 0; }
+      .dash-left #phBadge img { max-width: 100%; height: auto; }
+      .dash-left .footer-nav { margin-bottom: 0; flex-shrink: 0; justify-content: flex-start; gap: 4px 10px; }
+      .dash-left .footer-nav a { font-size: 0.68rem; }
+      .dash-left > footer { flex-shrink: 0; padding-top: 4px; }
+      .dash-left > footer p { flex-direction: column; align-items: flex-start; gap: 4px; }
+
+      /* ── MIDDLE COLUMN: main product/service input card ────────── */
+      #dashCard.card {
+        grid-area: main;
+        margin-bottom: 0;
+        min-height: 0;
+        overflow-y: auto;
+        padding: 22px 20px;
+      }
+
+      /* ── RIGHT COLUMN: results + action buttons ────────────────── */
+      .dash-right {
+        grid-area: right;
+        display: flex;
+        flex-direction: column;
+        gap: 14px;
+        min-height: 0;
+      }
+      .dash-right .results-card {
+        margin-bottom: 0;
+      }
+      .dash-right .results-card.visible {
+        flex: 1 1 auto;
+        min-height: 0;
+        overflow-y: auto;
+      }
+      .dash-right #actionBtns {
+        margin-bottom: 0;
+        flex-shrink: 0;
+        background: var(--white);
+        border: 1.5px solid var(--border);
+        border-radius: var(--radius);
+        padding: 14px;
+      }
+
+      /* When results aren't visible yet, give left space a friendly empty state */
+      .dash-right:not(:has(.results-card.visible)) #actionBtns {
+        opacity: 0.5;
+        pointer-events: none;
+      }
+
+      /* ── slim custom scrollbars to match existing style ────────── */
+      .dash-left::-webkit-scrollbar,
+      #dashCard.card::-webkit-scrollbar,
+      .dash-right .results-card::-webkit-scrollbar {
+        width: 5px;
+      }
+      .dash-left::-webkit-scrollbar-thumb,
+      #dashCard.card::-webkit-scrollbar-thumb,
+      .dash-right .results-card::-webkit-scrollbar-thumb {
+        background: var(--border2);
+        border-radius: 99px;
+      }
+
+      /* Tighter fit on shorter laptop screens */
+      @media (max-height: 820px) {
+        .wrap { padding: 14px 24px; row-gap: 10px; }
+        header { padding-bottom: 10px; }
+        #dashCard.card, .dash-right .results-card { padding: 16px 16px; }
+        .dash-left .capital-bar { padding: 14px 14px 12px; }
+      }
+    }
   </style>
 </head>
 <body>
@@ -354,7 +527,7 @@
     <!-- PRODUCT HUNT-->
      </br>
      </br>
-<center>
+<center id="phBadge">
   <a href="https://www.producthunt.com/products/openstartup?embed=true&amp;utm_source=badge-featured&amp;utm_medium=badge&amp;utm_campaign=badge-openstartup" target="_blank" rel="noopener noreferrer"><img alt="OpenStartup  - Instant profit &amp; pricing calculator for small businesses | Product Hunt" width="250" height="54" src="https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=1132561&amp;theme=light&amp;t=1777183974652"></a>
 </center>
 
@@ -365,6 +538,7 @@
         <path d="M22.25 12c0-1.43-.88-2.67-2.19-3.34.46-1.39.2-2.9-.81-3.91s-2.52-1.27-3.91-.81c-.66-1.31-1.91-2.19-3.34-2.19s-2.67.88-3.33 2.19c-1.4-.46-2.91-.2-3.92.81s-1.26 2.52-.8 3.91C3.13 9.33 2.25 10.57 2.25 12s.88 2.67 2.19 3.34c-.46 1.39-.2 2.9.81 3.91s2.52 1.26 3.91.8c.66 1.31 1.9 2.19 3.33 2.19s2.68-.88 3.34-2.19c1.39.46 2.9.2 3.91-.81s1.27-2.52.81-3.91C21.37 14.67 22.25 13.43 22.25 12z" fill="#1D9BF0"/>
         <path d="M9 12.5l2.5 2.5 5-5.5" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
+      <span class="logo-tagline-desktop">Instant profit &amp; pricing calculator for small businesses</span>
     </div>
     <p>Instant profit &amp; pricing calculator for small businesses</p>
     <div class="nav-pills">
@@ -406,17 +580,18 @@
   </div>
 
   <!-- BUSINESS TOOLS LINKS -->
-  <div style="text-align:center;margin-bottom:10px;padding:8px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;">
-    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
-    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
+  <div id="bizToolsTop" style="text-align:center;margin-bottom:10px;padding:7px 8px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;white-space:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <span style="font-size:0.56rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Aspire</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Wise</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Testimonial</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Uptime</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Seline</a>
   </div>
 
 
   <!-- DEMO BAR -->
+  <div class="dash-left">
   <div class="demo-bar">
     <div class="demo-bar-text">
       See how it works
@@ -440,9 +615,10 @@
       <div class="capital-stat"><div class="capital-stat-label">Return</div><div class="capital-stat-val green" id="capitalReturn">—</div></div>
     </div>
   </div>
+  </div><!-- /dash-left -->
 
   <!-- MAIN INPUT CARD -->
-  <div class="card">
+  <div class="card" id="dashCard">
 
     <!-- CURRENCY + BUSINESS TYPE -->
     <div class="card-title">Product / Service</div>
@@ -631,6 +807,7 @@
 
   </div><!-- /card -->
 
+  <div class="dash-right">
   <!-- RESULTS CARD -->
   <div class="results-card" id="resultsCard">
     <div class="card-title">Results</div>
@@ -725,6 +902,7 @@
       <span class="btn-sub">via WhatsApp or Telegram</span>
     </div>
   </div>
+  </div><!-- /dash-right -->
 
   <!-- ADS -->
   <div class="ads-placeholder">
@@ -735,7 +913,7 @@
       <div class="ads-placeholder-label">Ad space</div>
     </div>
   </div>
-  <p style="text-align:center;font-size:0.7rem;color:var(--dim);margin-top:6px;margin-bottom:14px;">Contact us for <a href="https://openstartup.xyz/contact" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">Sponsored Ads</a></p>
+  <p id="sponsorNote" style="text-align:center;font-size:0.7rem;color:var(--dim);margin-top:6px;margin-bottom:14px;">Contact us for <a href="https://openstartup.xyz/contact" target="_blank" style="color:var(--accent);text-decoration:none;font-weight:600;">Sponsored Ads</a></p>
 
   <!-- TESTIMONIALS -->
   <div class="testimonials-wrap">
@@ -757,13 +935,13 @@
   </div>
 
   <!-- BUSINESS TOOLS -->
-  <div style="text-align:center;margin-bottom:10px;padding:8px 12px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;">
-    <span style="font-size:0.68rem;font-weight:600;color:var(--muted);">Tools: </span>
-    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Aspire</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Wise</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Testimonial</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Uptime</a><span style="color:var(--dim);font-size:0.6rem;">|</span>
-    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.68rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 3px;">Seline</a>
+  <div id="bizToolsBottom" style="text-align:center;margin-bottom:10px;padding:7px 8px;background:var(--white);border:1.5px solid var(--border);border-radius:10px;white-space:nowrap;overflow-x:auto;-webkit-overflow-scrolling:touch;">
+    <span style="font-size:0.56rem;font-weight:600;color:var(--muted);">Tools: </span>
+    <a href="https://openstartup.xyz/aspire" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Aspire</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/wise" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Wise</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/testimonial" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Testimonial</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/uptime" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Uptime</a><span style="color:var(--dim);font-size:0.5rem;">|</span>
+    <a href="https://openstartup.xyz/seline" target="_blank" style="font-size:0.56rem;font-weight:600;color:var(--accent);text-decoration:none;margin:0 2px;">Seline</a>
   </div>
 
   <!-- FOOTER NAV -->
@@ -1516,6 +1694,71 @@
   // ── Boot ──────────────────────────────────────────────────────────────────
   addCostRow();
   renderTestimonials();
+
+  // ── Desktop dashboard: relocate Ad space + testimonials below Starting
+  //    Capital. Runs only on real desktop devices (matches the CSS media
+  //    query) and only moves DOM nodes at runtime — mobile/iPad markup and
+  //    order are never touched, since this never runs there. ──────────────
+  (function () {
+    var mq = window.matchMedia('(min-width: 1024px) and (pointer: fine) and (hover: hover)');
+    var ads = document.querySelector('.ads-placeholder');
+    var sponsorNote = document.getElementById('sponsorNote');
+    var testimonials = document.querySelector('.testimonials-wrap');
+    var bizToolsBottom = document.getElementById('bizToolsBottom');
+    var phBadge = document.getElementById('phBadge');
+    var footerNav = document.querySelector('.footer-nav');
+    var footerEl = document.querySelector('.wrap > footer');
+    var dashLeft = document.querySelector('.dash-left');
+    if (!ads || !testimonials || !dashLeft) return;
+
+    // Markers so we can always put things back exactly where they came from.
+    var adsMarker = document.createComment('ads-original-position');
+    ads.parentNode.insertBefore(adsMarker, ads);
+    var testimonialsMarker = document.createComment('testimonials-original-position');
+    testimonials.parentNode.insertBefore(testimonialsMarker, testimonials);
+    var bizBottomMarker = null;
+    if (bizToolsBottom) {
+      bizBottomMarker = document.createComment('biztools-bottom-original-position');
+      bizToolsBottom.parentNode.insertBefore(bizBottomMarker, bizToolsBottom);
+    }
+    var phBadgeMarker = null;
+    if (phBadge) {
+      phBadgeMarker = document.createComment('phbadge-original-position');
+      phBadge.parentNode.insertBefore(phBadgeMarker, phBadge);
+    }
+    var footerNavMarker = null;
+    if (footerNav) {
+      footerNavMarker = document.createComment('footer-nav-original-position');
+      footerNav.parentNode.insertBefore(footerNavMarker, footerNav);
+    }
+    var footerMarker = null;
+    if (footerEl) {
+      footerMarker = document.createComment('footer-original-position');
+      footerEl.parentNode.insertBefore(footerMarker, footerEl);
+    }
+
+    function applyLayout(isDesktop) {
+      if (isDesktop) {
+        if (bizToolsBottom) dashLeft.insertBefore(bizToolsBottom, dashLeft.firstChild);
+        if (phBadge) dashLeft.insertBefore(phBadge, dashLeft.firstChild);
+        dashLeft.appendChild(ads);
+        if (sponsorNote) dashLeft.appendChild(sponsorNote);
+        dashLeft.appendChild(testimonials);
+        if (footerNav) dashLeft.appendChild(footerNav);
+        if (footerEl) dashLeft.appendChild(footerEl);
+      } else {
+        adsMarker.parentNode.insertBefore(ads, adsMarker);
+        if (sponsorNote) adsMarker.parentNode.insertBefore(sponsorNote, adsMarker);
+        testimonialsMarker.parentNode.insertBefore(testimonials, testimonialsMarker);
+        if (bizToolsBottom) bizBottomMarker.parentNode.insertBefore(bizToolsBottom, bizBottomMarker);
+        if (phBadge) phBadgeMarker.parentNode.insertBefore(phBadge, phBadgeMarker);
+        if (footerNav) footerNavMarker.parentNode.insertBefore(footerNav, footerNavMarker);
+        if (footerEl) footerMarker.parentNode.insertBefore(footerEl, footerMarker);
+      }
+    }
+    applyLayout(mq.matches);
+    mq.addEventListener('change', function (e) { applyLayout(e.matches); });
+  })();
 
 </script>
 
